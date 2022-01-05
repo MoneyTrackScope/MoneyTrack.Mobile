@@ -1,9 +1,11 @@
 import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:money_track/src/models/account_model.dart';
 import 'package:money_track/src/models/category_model.dart';
 import 'package:money_track/src/models/transaction_model.dart';
+import 'package:intl/intl.dart';
 
 class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({Key? key}) : super(key: key);
@@ -122,7 +124,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   },
                 ),
                 CheckboxListTile(
-                  title: Text("Set current date time"),
+                  title: const Text("Set current date time"),
                   value: _model.setCurrentDatetime,
                   onChanged: (value) {
                     setState(() {
@@ -131,26 +133,49 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   },
                 ),
                 if (!_model.setCurrentDatetime)
-                  TextButton(
-                      onPressed: () {
-                        DatePicker.showDatePicker(
-                          context,
-                          showTitleActions: true,
-                          minTime: TransactionModel.CutOffDate,
-                          maxTime: DateTime.now(),
-                          onChanged: (value) {
-                            setState(() {
-                              _model.addeDttm = value;
-                            });
-                          },
-                          onConfirm: (value) {
-                            setState(() {
-                              _model.addeDttm = value;
-                            });
-                          },
-                        );
+                  DateTimeField(
+                      format: DateFormat("yyyy-MM-dd HH:mm"),
+                      decoration: const InputDecoration(
+                        labelText: "Added Date Time",
+                      ),
+                      onChanged: (value){
+                        _model.addeDttm = value;
                       },
-                      child: Text("Added date time"))
+                      onShowPicker: (context, currentValue) async {
+                        final date = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: TransactionModel.CutOffDate,
+                            lastDate: DateTime.now());
+                        if (date != null) {
+                          final time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(
+                                  currentValue ?? DateTime.now()));
+
+                          if(time == null){
+                            return currentValue;
+                          }
+
+                          return DateTimeField.combine(date, time);
+                        }
+                        return currentValue;
+                      },
+                      validator: (value){
+                        if(_model.setCurrentDatetime){
+                          return null;
+                        }
+
+                        if(value == null){
+                          return "Please enter the added date";
+                        }
+
+                        if(value.isBefore(TransactionModel.CutOffDate)
+                        || value.isAfter(DateTime.now())){
+                          return "Please enter correct date time";
+                        }
+                      },
+                  ),
               ],
             ),
           ),
