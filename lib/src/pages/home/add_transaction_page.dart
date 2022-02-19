@@ -20,24 +20,30 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final _quantityController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  final _model = TransactionModel();
+  final _model = TransactionModel(quantity: Decimal.zero, addeDttm: TransactionModel.cutOffDate);
 
-  var _categories = <CategoryModel>[
-    CategoryModel(id: 0, name: "Cat1", isSystem: false),
-    CategoryModel(id: 1, name: "Cat2", isSystem: false)
-  ];
-  var _accounts = <AccountModel>[
+  List<CategoryModel>? _categories;
+  List<AccountModel>? _accounts;
+
+  _AddTransactionPageState() {
+    _categories = <CategoryModel>[
+      CategoryModel(id: 0, name: "Cat1", isSystem: false),
+      CategoryModel(id: 1, name: "Cat2", isSystem: false)
+    ];
+
+    _accounts = <AccountModel>[
     AccountModel(id: 0, name: "Acc1", balance: Decimal.zero),
     AccountModel(id: 1, name: "Acc2", balance: Decimal.zero)
   ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuItem<CategoryModel>> categoryMenuItems = _categories
+    List<DropdownMenuItem<CategoryModel>> categoryMenuItems = _categories!
         .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
         .toList();
 
-    List<DropdownMenuItem<AccountModel>> accountMenuItems = _accounts
+    List<DropdownMenuItem<AccountModel>> accountMenuItems = _accounts!
         .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
         .toList();
 
@@ -134,47 +140,47 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 ),
                 if (!_model.setCurrentDatetime)
                   DateTimeField(
-                      format: DateFormat("yyyy-MM-dd HH:mm"),
-                      decoration: const InputDecoration(
-                        labelText: "Added Date Time",
-                      ),
-                      onChanged: (value){
-                        _model.addeDttm = value;
-                      },
-                      onShowPicker: (context, currentValue) async {
-                        final date = await showDatePicker(
+                    format: DateFormat("yyyy-MM-dd HH:mm"),
+                    decoration: const InputDecoration(
+                      labelText: "Added Date Time",
+                    ),
+                    onChanged: (value) {
+                      _model.addeDttm = value ?? TransactionModel.cutOffDate;
+                    },
+                    onShowPicker: (context, currentValue) async {
+                      final date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: TransactionModel.cutOffDate,
+                          lastDate: DateTime.now());
+                      if (date != null) {
+                        final time = await showTimePicker(
                             context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: TransactionModel.CutOffDate,
-                            lastDate: DateTime.now());
-                        if (date != null) {
-                          final time = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.fromDateTime(
-                                  currentValue ?? DateTime.now()));
+                            initialTime: TimeOfDay.fromDateTime(
+                                currentValue ?? DateTime.now()));
 
-                          if(time == null){
-                            return currentValue;
-                          }
-
-                          return DateTimeField.combine(date, time);
-                        }
-                        return currentValue;
-                      },
-                      validator: (value){
-                        if(_model.setCurrentDatetime){
-                          return null;
+                        if (time == null) {
+                          return currentValue;
                         }
 
-                        if(value == null){
-                          return "Please enter the added date";
-                        }
+                        return DateTimeField.combine(date, time);
+                      }
+                      return currentValue;
+                    },
+                    validator: (value) {
+                      if (_model.setCurrentDatetime) {
+                        return null;
+                      }
 
-                        if(value.isBefore(TransactionModel.CutOffDate)
-                        || value.isAfter(DateTime.now())){
-                          return "Please enter correct date time";
-                        }
-                      },
+                      if (value == null) {
+                        return "Please enter the added date";
+                      }
+
+                      if (value.isBefore(TransactionModel.cutOffDate) ||
+                          value.isAfter(DateTime.now())) {
+                        return "Please enter correct date time";
+                      }
+                    },
                   ),
               ],
             ),

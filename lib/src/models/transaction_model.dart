@@ -3,24 +3,24 @@ import 'account_model.dart';
 import 'category_model.dart';
 
 class TransactionModel {
-  static DateTime CutOffDate = DateTime(1970);
+  static DateTime cutOffDate = DateTime(1970);
 
   int id;
-  Decimal? quantity;
+  Decimal quantity;
   String description;
   CategoryModel? category;
   AccountModel? account;
-  DateTime? addeDttm;
+  DateTime addeDttm;
   bool isPostponed;
   bool setCurrentDatetime;
 
   TransactionModel(
       {this.id = 0,
-      this.quantity = null,
+      required this.quantity,
       this.description = "",
-      this.category = null,
-      this.account = null,
-      this.addeDttm = null,
+      this.category,
+      this.account,
+      required this.addeDttm,
       this.isPostponed = false,
       this.setCurrentDatetime = true});
 }
