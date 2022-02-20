@@ -38,7 +38,8 @@ dependencies:
   animations: ^2.0.2
   decimal:
   datetime_picker_formfield: ^2.0.0
-  sticky_grouped_list: ^2.1.0
+  grouped_list: ^4.0.0-nullsafety.1
+  equatable: ^2.0.0
 
 dev_dependencies:
   flutter_test:

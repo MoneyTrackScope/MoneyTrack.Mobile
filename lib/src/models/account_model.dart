@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
+import 'package:equatable/equatable.dart';
 
-class AccountModel{
+class AccountModel extends Equatable{
   int id;
   String name;
   Decimal? balance;
@@ -10,4 +11,7 @@ class AccountModel{
     this.name = '',
     this.balance = null
   });
+
+  @override
+  List<Object> get props => [id];
 }
