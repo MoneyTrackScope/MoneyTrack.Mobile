@@ -20,36 +20,50 @@ class TransactionListPage extends StatefulWidget {
 class _TransactionListPageState extends State<TransactionListPage> {
   final _formKey = GlobalKey<AddTransactionFormState>();
 
+  ScrollController _controller = ScrollController();
 
-  var _transactionList = <TransactionModel>[
-    TransactionModel(addeDttm: DateTime(2022, 1, 5, 1, 2, 3), description: "Part 1jbdfhkaegfhjg aeygf weyugj jkfgv sdf g sgfh jse gdaghgdfj hgs gs gsjdghsdlkj gheslkjgh sldfkghPart 1jbdfhkaegfhjg aeygf weyugj jkfgv sdf g sgfh jse gdaghgdfj hgs gs gsjdghsdlkj gheslkjgh sldfkgh", quantity: Decimal.parse("12"),
-    category:  CategoryModel(id: 1, name: "Cat2", isSystem: false), account: AccountModel(id: 1, name: "Acc2", balance: Decimal.zero)),
-    TransactionModel(addeDttm: DateTime(2022, 1, 5, 1, 4, 3), description: "Part 1", quantity: Decimal.parse("12")),
+  List<TransactionModel> _transactionList = [];
 
-    TransactionModel(addeDttm: DateTime(2022, 1, 5, 1, 45, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 5, 1, 23, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 4, 1, 4, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 4, 1, 54, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 4, 1, 23, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 4, 3, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
 
-    TransactionModel(addeDttm: DateTime(2022, 1, 2, 5, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 2, 23, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 2, 22, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 2, 15, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
+  //test
+  Iterable<int> countDownFromSync(int num1, int num2) sync* {
+    int counter = num1;
+    while (counter <= num2) {
+      yield counter++;
+    }
+  }
 
-    TransactionModel(addeDttm: DateTime(2022, 1, 3, 5, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 3, 23, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 3, 43, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-    TransactionModel(addeDttm: DateTime(2022, 1, 3, 30, 2, 3), description: "Part 1", quantity: Decimal.parse("12")),
-  ];
+  int _currnetCount = 20;
+
+  _TransactionListPageState(){
+    _transactionList = countDownFromSync(1, _currnetCount).map((e) => TransactionModel(
+        addeDttm: DateTime.now().add(Duration(days: -e)), 
+        description: "Description" + e.toString(), 
+        quantity: Decimal.parse(e.toString()),
+        category:  CategoryModel(id: e, name: "Cat" + e.toString(), isSystem: false), 
+        account: AccountModel(id: e, name: "Acc" + e.toString(), balance: Decimal.zero))
+      ).toList();
+  }
   
+  @override
+  void initState(){
+    super.initState();
+    _controller = ScrollController()..addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_scrollListener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
       body: GroupedListView<TransactionModel, DateTime>(
         elements: _transactionList,
+        controller: _controller,
         groupBy: (transaction){
           // Take only date, without time
           final DateFormat formatter = DateFormat('yyyy-MM-dd');
@@ -66,10 +80,37 @@ class _TransactionListPageState extends State<TransactionListPage> {
               context: context,
               builder: (BuildContext context){
                 return Container(
-                  child: Column(
-                    children: <Widget>[
-                      AddTransactionForm(key: _formKey, model: transaction)
-                    ],
+                  margin: const EdgeInsets.all(5),
+                  height: MediaQuery.of(context).size.width * 1.2,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        AddTransactionForm(key: _formKey, model: transaction),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            ElevatedButton(
+                              child: const Text("Update"),
+                              onPressed: () => {
+                                // Update
+                              },
+                            ),
+                            TextButton(
+                              child: const Text("Delete"),
+                              onPressed: () => {
+                                // Delete
+                              },
+                            ),
+                            OutlinedButton(
+                              child: const Text("Cancel"),
+                              onPressed: () => {
+                                Navigator.pop(context)
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
@@ -105,7 +146,9 @@ class _TransactionListPageState extends State<TransactionListPage> {
                 ),
                 ListTile(
                   title: Text(
-                    transaction.description,
+                    transaction.description.length > 100
+                    ? transaction.description.substring(0, 100) + "..."
+                    : transaction.description,
                     style: const TextStyle(fontSize: 14),
                   ),
                   subtitle: Padding(
@@ -122,5 +165,23 @@ class _TransactionListPageState extends State<TransactionListPage> {
         )
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (_controller.position.extentAfter < 500) {
+      setState(() {
+        var newCount = _currnetCount + 10;
+
+          _transactionList.addAll(countDownFromSync(_currnetCount + 1, newCount).map((e) => TransactionModel(
+          addeDttm: DateTime.now().add(Duration(days: -e)), 
+          description: "Description" + e.toString(), 
+          quantity: Decimal.parse(e.toString()),
+          category:  CategoryModel(id: e, name: "Cat" + e.toString(), isSystem: false), 
+          account: AccountModel(id: e, name: "Acc" + e.toString(), balance: Decimal.zero))
+      ).toList());
+
+      _currnetCount = newCount;
+      });
+    }
   }
 }
