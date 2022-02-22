@@ -81,7 +81,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
               builder: (BuildContext context){
                 return Container(
                   margin: const EdgeInsets.all(5),
-                  height: MediaQuery.of(context).size.width * 1.2,
+                  height: MediaQuery.of(context).size.height * 0.8,
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[

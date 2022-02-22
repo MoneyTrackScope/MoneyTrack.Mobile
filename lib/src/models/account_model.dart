@@ -4,12 +4,12 @@ import 'package:equatable/equatable.dart';
 class AccountModel extends Equatable{
   int id;
   String name;
-  Decimal? balance;
+  Decimal balance;
 
   AccountModel({
     this.id = 0,
     this.name = '',
-    this.balance = null
+    required this.balance
   });
 
   @override

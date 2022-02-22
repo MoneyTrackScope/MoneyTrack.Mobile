@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_track/src/pages/home/home_page.dart';
+
+import 'src/pages/home/home_page.dart';
+import 'src/pages/setting/setting_page.dart';
 
 void main() {
   runApp(const FormApp());
@@ -27,7 +29,7 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   Widget app = const HomePage(restorationId: "home");
-  var text = "test";
+  
   @override
   Widget build(BuildContext context) {
     const drawerHeader = UserAccountsDrawerHeader(
@@ -59,7 +61,7 @@ class _MainAppState extends State<MainApp> {
               leading: const Icon(Icons.settings),
               onTap: () {
                 setState(() {
-                  app = const App2();
+                  app = const SettingPage();
                 });
                 Navigator.pop(context);
               },
@@ -76,23 +78,5 @@ class _MainAppState extends State<MainApp> {
       ),
       body: app,
     );
-  }
-}
-
-class App1 extends StatelessWidget {
-  const App1({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text("App1");
-  }
-}
-
-class App2 extends StatelessWidget {
-  const App2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text("App2");
   }
 }

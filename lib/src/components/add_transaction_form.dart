@@ -10,8 +10,6 @@ class AddTransactionForm extends StatefulWidget {
 
   TransactionModel model;
 
-  AddTransactionFormState? state;
-
   AddTransactionForm({ Key? key, required this.model}) : super(key: key);
 
   @override

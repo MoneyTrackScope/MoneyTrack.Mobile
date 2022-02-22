@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:money_track/src/pages/home/add_transaction_page.dart';
 import 'package:money_track/src/pages/home/transaction_list_page.dart';
