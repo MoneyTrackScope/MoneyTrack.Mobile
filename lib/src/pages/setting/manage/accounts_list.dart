@@ -1,7 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/add_account_form.dart';
 import 'package:money_track/src/models/account_model.dart';
+import 'package:money_track/src/services/account_service.dart';
 
 class AccountsList extends StatefulWidget {
   const AccountsList({ Key? key }) : super(key: key);
@@ -13,24 +15,25 @@ class AccountsList extends StatefulWidget {
 class _AccountsListState extends State<AccountsList> {
   final _formKey = GlobalKey<AddAccountFormState>();
 
+  final AccountService _accountService;
+
   late final List<AccountModel> _accounts;
 
+  _AccountsListState()
+  : _accountService = GetIt.I.get<AccountService>();
 
-  //test
-  Iterable<int> countDownFromSync(int num1, int num2) sync* {
-    int counter = num1;
-    while (counter <= num2) {
-      yield counter++;
-    }
-  }
+  @override
+  void initState(){
+    super.initState();
 
-  _AccountsListState(){
-    _accounts = countDownFromSync(1, 5).map((e) => AccountModel(
-          name: "name"+e.toString(),
-          balance: Decimal.fromInt(e)
-        )
-      ).toList();
-  }
+    Future.delayed(Duration.zero, () async {
+      var accountList = await _accountService.getAll();
+
+      setState(() {
+        _accounts = accountList;
+      });
+    });
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +71,19 @@ class _AccountsListState extends State<AccountsList> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               ElevatedButton(
-                              child: const Text("Update"),
-                              onPressed: () => {
-                                // Update
+                                child: const Text("Update"),
+                                onPressed: () async {
+                                  var account = _formKey.currentState?.getAccount();
+
+                                  if(account != null){
+                                    await _accountService.update(account);
+                                  }
                                 },
                               ),
                               TextButton(
                                 child: const Text("Delete"),
-                                onPressed: () => {
-                                  // Delete
+                                onPressed: () async {
+                                  await _accountService.delete(_accounts[index].id);
                                 },
                               ),
                               OutlinedButton(
@@ -117,8 +124,12 @@ class _AccountsListState extends State<AccountsList> {
                         children: <Widget>[
                           ElevatedButton(
                             child: const Text("Add"),
-                            onPressed: () => {
-                              // Add
+                            onPressed: () async {
+                              var account = _formKey.currentState?.getAccount();
+
+                              if(account != null){
+                                await _accountService.add(account);
+                              }
                             },
                           ),
                           OutlinedButton(

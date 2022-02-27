@@ -71,4 +71,16 @@ class AddAccountFormState extends State<AddAccountForm> {
       ),
     );
   }
+
+  AccountModel? getAccount(){
+    var valid = _formKey.currentState!.validate();
+      if (!valid) {
+        return null;
+      }
+    
+    _model.name = _nameController.text;
+    _model.balance = Decimal.parse(_balanceController.text);
+
+    return _model;
+  }
 }

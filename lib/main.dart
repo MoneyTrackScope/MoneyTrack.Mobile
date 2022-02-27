@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:money_track/src/services/account_service.dart';
+import 'package:money_track/src/services/category_service.dart';
+import 'package:money_track/src/services/transaction_service.dart';
 
 import 'src/pages/home/home_page.dart';
 import 'src/pages/setting/setting_page.dart';
 
-void main() {
+Future main() async{
+  setupDependencies();
+
   runApp(const FormApp());
+}
+
+void setupDependencies(){
+  GetIt.I.registerSingleton(TransactionService());
+  GetIt.I.registerSingleton(AccountService());
+  GetIt.I.registerSingleton(CategoryService());
 }
 
 class FormApp extends StatelessWidget {

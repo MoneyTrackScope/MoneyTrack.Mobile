@@ -1,10 +1,13 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/src/models/account_model.dart';
 import 'package:money_track/src/models/category_model.dart';
 import 'package:money_track/src/models/transaction_model.dart';
 import 'package:intl/intl.dart';
+import 'package:money_track/src/services/account_service.dart';
+import 'package:money_track/src/services/category_service.dart';
 
 class AddTransactionForm extends StatefulWidget {
 
@@ -22,36 +25,46 @@ class AddTransactionFormState extends State<AddTransactionForm> {
   final TextEditingController _quantityController;
   final TextEditingController _descriptionController;
 
+  final AccountService _accountService;
+  final CategoryService _categoryService;
+
   final TransactionModel _model;
 
-  List<CategoryModel>? _categories;
-  List<AccountModel>? _accounts;
+  List<DropdownMenuItem<CategoryModel>> _categories = [];
+  List<DropdownMenuItem<AccountModel>>_accounts = [];
 
   AddTransactionFormState(this._model)
     : _quantityController = TextEditingController(text: _model.quantity !=  Decimal.zero ? _model.quantity.toString() : "")
     , _descriptionController = TextEditingController(text: _model.description)
-  {
-    _categories = <CategoryModel>[
-      CategoryModel(id: 0, name: "Cat1", isSystem: false),
-      CategoryModel(id: 1, name: "Cat2", isSystem: false)
-    ];
+    , _accountService = GetIt.I.get<AccountService>()
+    , _categoryService = GetIt.I.get<CategoryService>();
 
-    _accounts = <AccountModel>[
-      AccountModel(id: 0, name: "Acc1", balance: Decimal.zero),
-      AccountModel(id: 1, name: "Acc2", balance: Decimal.zero)
-    ];
-  }
+  @override
+  void initState(){
+    super.initState();
+
+    _accountService.getAll()
+      .then((value){
+        setState(() {
+          _accounts = value
+            .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
+            .toList();
+        }
+      );
+    });
+    _categoryService.getAll()
+      .then((value){
+        setState(() {
+          _categories = value
+            .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
+            .toList();
+        }
+      );
+    });
+  }  
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuItem<CategoryModel>> categoryMenuItems = _categories!
-        .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
-        .toList();
-
-    List<DropdownMenuItem<AccountModel>> accountMenuItems = _accounts!
-        .map((c) => DropdownMenuItem(child: Text(c.name), value: c))
-        .toList();
-
     return Form(
       key: _formKey,
       child: Scrollbar(
@@ -95,7 +108,7 @@ class AddTransactionFormState extends State<AddTransactionForm> {
               DropdownButtonFormField<CategoryModel>(
                 decoration: const InputDecoration(
                     filled: false, labelText: "Category"),
-                items: categoryMenuItems,
+                items: _categories,
                 value: _model.category,
                 onChanged: (value) {
                   setState(() {
@@ -112,7 +125,7 @@ class AddTransactionFormState extends State<AddTransactionForm> {
               DropdownButtonFormField<AccountModel>(
                 decoration: const InputDecoration(
                     filled: false, labelText: "Account"),
-                items: accountMenuItems,
+                items: _accounts,
                 value: _model.account,
                 onChanged: (value) {
                   setState(() {

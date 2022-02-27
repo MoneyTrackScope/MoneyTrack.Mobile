@@ -1,7 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/add_transaction_form.dart';
 import 'package:money_track/src/models/transaction_model.dart';
+import 'package:money_track/src/services/transaction_service.dart';
 
 class AddTransactionPage extends StatefulWidget {
   const AddTransactionPage({Key? key}) : super(key: key);
@@ -14,8 +16,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final _formKey = GlobalKey<AddTransactionFormState>();
 
   final _model = TransactionModel(quantity: Decimal.zero, addeDttm: TransactionModel.cutOffDate);
+  final TransactionService _transactionService;
 
-  _AddTransactionPageState();
+  _AddTransactionPageState()
+  : _transactionService = GetIt.I.get<TransactionService>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +28,11 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     return Scaffold(
       body: transactionAddForm,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           var transaction = _formKey.currentState?.getTransaction();
 
           if(transaction != null){
-            // add transaction
+            await _transactionService.add(transaction);
           }
         },
         child: const Icon(Icons.add),

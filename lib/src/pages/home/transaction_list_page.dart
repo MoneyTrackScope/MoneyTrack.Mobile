@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:money_track/src/components/add_transaction_form.dart';
 import 'package:money_track/src/components/transaction_group_separator.dart';
 import 'package:money_track/src/models/account_model.dart';
 import 'package:money_track/src/models/category_model.dart';
+import 'package:money_track/src/models/operationals/paging.dart';
 import 'package:money_track/src/models/transaction_model.dart';
 import 'package:intl/intl.dart';
+import 'package:money_track/src/services/transaction_service.dart';
 
 class TransactionListPage extends StatefulWidget {
   const TransactionListPage({ Key? key }) : super(key: key);
@@ -20,35 +23,30 @@ class TransactionListPage extends StatefulWidget {
 class _TransactionListPageState extends State<TransactionListPage> {
   final _formKey = GlobalKey<AddTransactionFormState>();
 
+  final TransactionService _transactionService;
+
   ScrollController _controller = ScrollController();
 
   List<TransactionModel> _transactionList = [];
 
+  final int _pageSize = 20;
+  int _currentPage = 1;
 
-  //test
-  Iterable<int> countDownFromSync(int num1, int num2) sync* {
-    int counter = num1;
-    while (counter <= num2) {
-      yield counter++;
-    }
-  }
-
-  int _currnetCount = 20;
-
-  _TransactionListPageState(){
-    _transactionList = countDownFromSync(1, _currnetCount).map((e) => TransactionModel(
-        addeDttm: DateTime.now().add(Duration(days: -e)), 
-        description: "Description" + e.toString(), 
-        quantity: Decimal.parse(e.toString()),
-        category:  CategoryModel(id: e, name: "Cat" + e.toString(), isSystem: false), 
-        account: AccountModel(id: e, name: "Acc" + e.toString(), balance: Decimal.zero))
-      ).toList();
-  }
+  _TransactionListPageState()
+  : _transactionService = GetIt.I.get<TransactionService>();
   
   @override
   void initState(){
     super.initState();
     _controller = ScrollController()..addListener(_scrollListener);
+
+    Future.delayed(Duration.zero, () async {
+      var transactionList = await _transactionService.getLast(Paging(currentPage: _currentPage, pageSize: _pageSize));
+
+      setState(() {
+        _transactionList.addAll(transactionList);
+      });
+    });
   }
 
   @override
@@ -91,20 +89,24 @@ class _TransactionListPageState extends State<TransactionListPage> {
                           children: <Widget>[
                             ElevatedButton(
                               child: const Text("Update"),
-                              onPressed: () => {
-                                // Update
+                              onPressed: () async {
+                                var transaction = _formKey.currentState?.getTransaction();
+
+                                if(transaction != null){
+                                  await _transactionService.update(transaction);
+                                }
                               },
                             ),
                             TextButton(
                               child: const Text("Delete"),
-                              onPressed: () => {
-                                // Delete
+                              onPressed: () async {
+                                await _transactionService.delete(transaction.id);
                               },
                             ),
                             OutlinedButton(
                               child: const Text("Cancel"),
-                              onPressed: () => {
-                                Navigator.pop(context)
+                              onPressed: () {
+                                Navigator.pop(context);
                               },
                             ),
                           ],
@@ -167,20 +169,21 @@ class _TransactionListPageState extends State<TransactionListPage> {
     );
   }
 
+  double prevExtentAfter = 0;
+
   void _scrollListener() {
-    if (_controller.position.extentAfter < 500) {
-      setState(() {
-        var newCount = _currnetCount + 10;
+    if ((_controller.position.extentAfter < 500 && _controller.position.extentAfter >= prevExtentAfter) 
+    || _controller.position.extentAfter < 300) {
+      prevExtentAfter = _controller.position.extentAfter;
 
-          _transactionList.addAll(countDownFromSync(_currnetCount + 1, newCount).map((e) => TransactionModel(
-          addeDttm: DateTime.now().add(Duration(days: -e)), 
-          description: "Description" + e.toString(), 
-          quantity: Decimal.parse(e.toString()),
-          category:  CategoryModel(id: e, name: "Cat" + e.toString(), isSystem: false), 
-          account: AccountModel(id: e, name: "Acc" + e.toString(), balance: Decimal.zero))
-      ).toList());
-
-      _currnetCount = newCount;
+      var newPage = _currentPage + 1;
+      var newItems =  _transactionService.getLast(Paging(currentPage: newPage, pageSize: _pageSize));
+      
+      newItems.then((data){
+          setState(() {
+            _currentPage = newPage;
+            _transactionList.addAll(data);
+        });
       });
     }
   }

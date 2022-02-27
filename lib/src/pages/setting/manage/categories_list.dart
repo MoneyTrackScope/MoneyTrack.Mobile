@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/add_category_form.dart';
 import 'package:money_track/src/models/category_model.dart';
+import 'package:money_track/src/services/category_service.dart';
 
 class CategoriesList extends StatefulWidget {
   const CategoriesList({ Key? key }) : super(key: key);
@@ -12,21 +14,26 @@ class CategoriesList extends StatefulWidget {
 class _CategoriesListState extends State<CategoriesList> {
   final _formKey = GlobalKey<AddCategoryFormState>();
 
+  final CategoryService _categoryService;
+
   late final List<CategoryModel> _categories;
 
-  //test
-  Iterable<int> countDownFromSync(int num1, int num2) sync* {
-    int counter = num1;
-    while (counter <= num2) {
-      yield counter++;
-    }
-  }
+  _CategoriesListState()
+  : _categoryService = GetIt.I.get<CategoryService>();
 
-  _CategoriesListState(){
-    _categories = countDownFromSync(1, 5).map((e) => CategoryModel(
-        name: "name"+e.toString())
-      ).toList();
-  }
+
+  @override
+  void initState(){
+    super.initState();
+
+    Future.delayed(Duration.zero, () async {
+      var categoryList = await _categoryService.getAll();
+
+      setState(() {
+        _categories = categoryList;
+      });
+    });
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +65,18 @@ class _CategoriesListState extends State<CategoriesList> {
                             children: <Widget>[
                               ElevatedButton(
                               child: const Text("Update"),
-                              onPressed: () => {
-                                // Update
+                              onPressed: () async {
+                                  var category = _formKey.currentState?.getCategory();
+
+                                  if(category != null){
+                                    await _categoryService.update(category);
+                                  }
                                 },
                               ),
                               TextButton(
                                 child: const Text("Delete"),
-                                onPressed: () => {
-                                  // Delete
+                                onPressed: () async {
+                                  await _categoryService.delete(_categories[index].id);
                                 },
                               ),
                               OutlinedButton(
@@ -106,8 +117,12 @@ class _CategoriesListState extends State<CategoriesList> {
                         children: <Widget>[
                           ElevatedButton(
                             child: const Text("Add"),
-                            onPressed: () => {
-                              // Add
+                            onPressed: () async {
+                              var category = _formKey.currentState?.getCategory();
+
+                              if(category != null){
+                                await _categoryService.add(category);
+                              }
                             },
                           ),
                           OutlinedButton(
