@@ -16,7 +16,7 @@ class _CategoriesListState extends State<CategoriesList> {
 
   final CategoryService _categoryService;
 
-  late final List<CategoryModel> _categories;
+  List<CategoryModel> _categories = [];
 
   _CategoriesListState()
   : _categoryService = GetIt.I.get<CategoryService>();

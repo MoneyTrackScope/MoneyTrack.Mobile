@@ -17,7 +17,7 @@ class _AccountsListState extends State<AccountsList> {
 
   final AccountService _accountService;
 
-  late final List<AccountModel> _accounts;
+  List<AccountModel> _accounts = [];
 
   _AccountsListState()
   : _accountService = GetIt.I.get<AccountService>();
