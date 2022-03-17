@@ -1,94 +1,43 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:money_track/src/pages/login/signIn_page.dart';
 import 'package:money_track/src/services/account_service.dart';
 import 'package:money_track/src/services/category_service.dart';
+import 'package:money_track/src/services/internal/app_http_client.dart';
+import 'package:money_track/src/services/internal/secure_storeage.dart';
 import 'package:money_track/src/services/transaction_service.dart';
-
-import 'src/pages/home/home_page.dart';
-import 'src/pages/setting/setting_page.dart';
+import 'package:money_track/src/services/user_service.dart';
 
 Future main() async{
   setupDependencies();
 
-  runApp(const FormApp());
+  runApp(const App());
 }
 
 void setupDependencies(){
+  GetIt.I.registerSingleton(StorageService());
+  GetIt.I.registerSingleton(AppHtppClient());
+
   GetIt.I.registerSingleton(TransactionService());
   GetIt.I.registerSingleton(AccountService());
   GetIt.I.registerSingleton(CategoryService());
+  GetIt.I.registerSingleton(UserService());
 }
 
-class FormApp extends StatelessWidget {
-  const FormApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Form Samples',
+      title: 'MoenyTrack',
       theme: ThemeData(primarySwatch: Colors.teal),
-      home: const MainApp(),
-    );
-  }
-}
-
-class MainApp extends StatefulWidget {
-  const MainApp({Key? key}) : super(key: key);
-
-  @override
-  _MainAppState createState() => _MainAppState();
-}
-
-class _MainAppState extends State<MainApp> {
-  Widget app = const HomePage(restorationId: "home");
-  
-  @override
-  Widget build(BuildContext context) {
-    const drawerHeader = UserAccountsDrawerHeader(
-      accountName: Text(
-        "test account",
+      home: Scaffold(
+        appBar: AppBar(title: const Text("Login")),
+        body: const SignInPage(),
       ),
-      accountEmail: Text(
-        "test email",
-      ),
-      currentAccountPicture: CircleAvatar(
-        child: FlutterLogo(size: 42.0),
-      ),
-    );
-
-    final listItems = ListView(
-          children: [
-            drawerHeader,
-            ListTile(
-                title: const Text("Home"),
-                leading: const Icon(Icons.home),
-                onTap: () {
-                  setState(() {
-                    app = const HomePage(restorationId: "home");
-                  });
-                  Navigator.pop(context);
-                }),
-            ListTile(
-              title: const Text("Settings"),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                setState(() {
-                  app = const SettingPage();
-                });
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Money Track'),
-      ),
-      drawer: Drawer(
-        child: listItems
-      ),
-      body: app,
     );
   }
 }

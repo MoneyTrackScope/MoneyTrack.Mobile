@@ -27,7 +27,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
 
   ScrollController _controller = ScrollController();
 
-  List<TransactionModel> _transactionList = [];
+  final List<TransactionModel> _transactionList = [];
 
   final int _pageSize = 20;
   int _currentPage = 1;
@@ -177,7 +177,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
       prevExtentAfter = _controller.position.extentAfter;
 
       var newPage = _currentPage + 1;
-      var newItems =  _transactionService.getLast(Paging(currentPage: newPage, pageSize: _pageSize));
+      var newItems = _transactionService.getLast(Paging(currentPage: newPage, pageSize: _pageSize));
       
       newItems.then((data){
           setState(() {

@@ -16,10 +16,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final _formKey = GlobalKey<AddTransactionFormState>();
 
   final _model = TransactionModel(quantity: Decimal.zero, addeDttm: TransactionModel.cutOffDate);
-  final TransactionService _transactionService;
+  final TransactionService _transactionService = GetIt.I.get<TransactionService>();
 
-  _AddTransactionPageState()
-  : _transactionService = GetIt.I.get<TransactionService>();
+  _AddTransactionPageState();
 
   @override
   Widget build(BuildContext context) {

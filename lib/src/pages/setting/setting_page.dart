@@ -24,7 +24,7 @@ class _SettingPageState extends State<SettingPage> {
                 leading: const Icon(Icons.category),
                 onPressed: (BuildContext context) {
                   Navigator.push(context, 
-                    MaterialPageRoute(builder: (_) => ManagePage())
+                    MaterialPageRoute(builder: (_) => const ManagePage())
                   );
                 },
               ),
