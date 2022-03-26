@@ -59,4 +59,9 @@ class UserService{
 
     throw const AuthException("Cannot load user");
   }
+
+  Future signOut() async {
+    await _storage.deleteSecureData(AppSettings.tokenKey);
+    await _storage.deleteSecureData(AppSettings.tokenExpiredAtKey);
+  }
 }

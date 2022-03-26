@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_track/src/pages/setting/user/account_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import 'manage/manage_page.dart';
@@ -43,7 +44,11 @@ class _SettingPageState extends State<SettingPage> {
               SettingsTile(
                 title: const Text("Account"),
                 leading: const Icon(Icons.person),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(context, 
+                    MaterialPageRoute(builder: (_) => const AccountPage())
+                  );
+                },
               )
             ],
           ),
