@@ -20,10 +20,10 @@ class UserService{
     final response = await _httpClient
       .post(
         "${ApiSettings.baseApiUrl}/$_controllerUrl/signIn",
-        body: jsonEncode(<String, String>{
+        body: <String, String>{
           "login" : login,
           "password" : password
-        })
+        }
       );
 
     if(response != null){

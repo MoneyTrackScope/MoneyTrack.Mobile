@@ -15,7 +15,7 @@ class AddTransactionPage extends StatefulWidget {
 class _AddTransactionPageState extends State<AddTransactionPage> {
   final _formKey = GlobalKey<AddTransactionFormState>();
 
-  final _model = TransactionModel(quantity: Decimal.zero, addeDttm: TransactionModel.cutOffDate);
+  final _model = TransactionModel(quantity: Decimal.zero, addedDttm: TransactionModel.cutOffDate);
   final TransactionService _transactionService = GetIt.I.get<TransactionService>();
 
   _AddTransactionPageState();

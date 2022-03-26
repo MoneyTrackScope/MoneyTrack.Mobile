@@ -10,7 +10,7 @@ class TransactionModel {
   String description;
   CategoryModel? category;
   AccountModel? account;
-  DateTime addeDttm;
+  DateTime addedDttm;
   bool isPostponed;
   bool setCurrentDatetime;
 
@@ -20,7 +20,28 @@ class TransactionModel {
       this.description = "",
       this.category,
       this.account,
-      required this.addeDttm,
+      required this.addedDttm,
       this.isPostponed = false,
       this.setCurrentDatetime = true});
+
+  TransactionModel.fromJson(Map<String, dynamic> json)
+  : id = json["id"],
+    quantity = Decimal.fromJson(json["quantity"].toString()),
+    description = json["description"],
+    category = CategoryModel.fromJson(json["category"]),
+    account = AccountModel.fromJson(json["account"]),
+    addedDttm = DateTime.parse(json["addedDttm"].toString()),
+    isPostponed = json["isPostponed"],
+    setCurrentDatetime = json["setCurrentDttm"];
+
+    Map<String, dynamic> toJson() => {
+    "id" : id,
+    "quantity" : quantity,
+    "description": description,
+    "category" : category?.toJson(),
+    "account":  account?.toJson(),
+    "addedDttm" : addedDttm.toIso8601String(),
+    "isPostponed" : isPostponed,
+    "setCurrentDttm" : setCurrentDatetime
+  };
 }

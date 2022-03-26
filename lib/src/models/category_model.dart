@@ -11,6 +11,17 @@ class CategoryModel extends Equatable{
     this.isSystem = false
   });
 
+  CategoryModel.fromJson(Map<String, dynamic> json)
+  : id = json["id"],
+    name = json["name"],
+    isSystem = json["isSystem"];
+
+  Map<String, dynamic> toJson() => {
+    "id" : id,
+    "name" : name,
+    "isSystem": isSystem
+  };
+
   @override
   List<Object> get props => [id];
 }

@@ -164,7 +164,7 @@ class AddTransactionFormState extends State<AddTransactionForm> {
                     labelText: "Added Date Time",
                   ),
                   onChanged: (value) {
-                    _model.addeDttm = value ?? TransactionModel.cutOffDate;
+                    _model.addedDttm = value ?? TransactionModel.cutOffDate;
                   },
                   onShowPicker: (context, currentValue) async {
                     final date = await showDatePicker(

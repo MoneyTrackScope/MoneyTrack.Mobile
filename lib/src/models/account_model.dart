@@ -12,6 +12,17 @@ class AccountModel extends Equatable{
     required this.balance
   });
 
+  AccountModel.fromJson(Map<String, dynamic> json)
+  : id = json["id"],
+    name = json["name"],
+    balance = Decimal.fromJson(json["balance"].toString());
+
+  Map<String, dynamic> toJson() => {
+    "id" : id,
+    "name" : name,
+    "balance" : balance.toJson()
+  };
+
   @override
   List<Object> get props => [id];
 }

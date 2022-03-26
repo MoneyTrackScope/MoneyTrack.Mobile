@@ -17,13 +17,13 @@ class UserModel{
     this.roles
   });
 
-  UserModel.fromJson(Map<String, dynamic> json) 
+  UserModel.fromJson(Map<String, dynamic> json)
   : id = json["id"],
     firstName = json["firstName"],
     lastName = json["lastName"],
     email = json["email"],
     userName = json["userName"],
-    roles = json["roles"];
+    roles = List<String>.from(json["roles"].map((x) => x.toString()));
 
   Map<String, dynamic> toJson() => {
     "id" : id,

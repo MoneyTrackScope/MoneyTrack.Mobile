@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:money_track/src/exceptions/auth_exception.dart';
 import 'package:money_track/src/main_app.dart';
-import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/services/user_service.dart';
 
 class SignInPage extends StatefulWidget {

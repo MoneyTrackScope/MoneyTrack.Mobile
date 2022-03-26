@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:money_track/src/services/internal/secure_storeage.dart';
@@ -28,7 +30,7 @@ class AppHtppClient{
   Future<String?> post(String uri, {Map<String, String>? headers, Object? body}) async{
     headers = await _enrichHeadersWithAuth(headers);
 
-    var response = await http.post(Uri.parse(uri), headers: headers, body: body)
+    var response = await http.post(Uri.parse(uri), headers: headers, body: jsonEncode(body))
       .timeout(
         const Duration(seconds: ApiSettings.timeoutSeconds),
         onTimeout: () {
@@ -46,7 +48,7 @@ class AppHtppClient{
   Future<String?> put(String uri, {Map<String, String>? headers, Object? body}) async{
     headers = await _enrichHeadersWithAuth(headers);
 
-    var response = await http.put(Uri.parse(uri), headers: headers, body: body)
+    var response = await http.put(Uri.parse(uri), headers: headers, body: jsonEncode(body))
       .timeout(
         const Duration(seconds: ApiSettings.timeoutSeconds),
         onTimeout: () {

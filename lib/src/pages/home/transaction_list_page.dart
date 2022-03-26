@@ -65,7 +65,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
         groupBy: (transaction){
           // Take only date, without time
           final DateFormat formatter = DateFormat('yyyy-MM-dd');
-          final forrmated = formatter.format(transaction.addeDttm);
+          final forrmated = formatter.format(transaction.addedDttm);
           
           return DateTime.parse(forrmated);
         },
@@ -156,7 +156,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 5),
                     child: Text(
-                      DateFormat('Hms').format(transaction.addeDttm),
+                      DateFormat('Hms').format(transaction.addedDttm),
                       style: const TextStyle(fontSize: 14),
                     ),
                   )
