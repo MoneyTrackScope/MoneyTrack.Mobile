@@ -34,10 +34,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'MoenyTrack',
       theme: ThemeData(primarySwatch: Colors.teal),
-      home: Scaffold(
-        appBar: AppBar(title: const Text("Login")),
-        body: const SignInPage(),
-      ),
+      home: const SignInPage()
     );
   }
 }

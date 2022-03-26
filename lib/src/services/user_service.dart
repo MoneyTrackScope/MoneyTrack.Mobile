@@ -39,6 +39,24 @@ class UserService{
   }
 
   Future<UserModel> signUp(UserModel model, String password) async {
-    return UserModel();
+    final response = await _httpClient
+      .post(
+        "${ApiSettings.baseApiUrl}/$_controllerUrl/signUp",
+        body: <String, dynamic>{
+          "user" : model.toJson(),
+          "password" : password
+        }
+      );
+
+    if(response != null){
+      var responseBody = jsonDecode(response);
+
+      _storage.writeSecureData(StorageItem(AppSettings.tokenKey, responseBody["token"]));
+      _storage.writeSecureData(StorageItem(AppSettings.tokenExpiredAtKey, responseBody["expiredAt"]));
+
+      return UserModel.fromJson(responseBody["user"]);
+    }
+
+    throw const AuthException("Cannot load user");
   }
 }

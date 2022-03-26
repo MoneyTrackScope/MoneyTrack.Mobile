@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:money_track/main.dart';
 import 'package:money_track/src/exceptions/auth_exception.dart';
-import 'package:money_track/src/main_app.dart';
-import 'package:money_track/src/pages/login/signUp_page.dart';
+import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/services/user_service.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({ Key? key }) : super(key: key);
+import '../../main_app.dart';
+
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({ Key? key }) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final UserService _userService = GetIt.I.get<UserService>();
 
   final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _showErrorLoginMessage = false;
   String _errorMessage = "";
@@ -25,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sign in")),
+      appBar: AppBar(title: const Text("Sign up")),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -50,7 +56,7 @@ class _SignInPageState extends State<SignInPage> {
                   _errorMessage,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.white70
+                    color: Colors.white
                   ),
                 )
               ),
@@ -60,18 +66,50 @@ class _SignInPageState extends State<SignInPage> {
                   controller: _loginController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'User Name',
+                    labelText: 'Email',
                   ),
                   validator: (value) {
                     if(value!.isEmpty){
-                      return "Please enter user name";
+                      return "Please enter email";
                     }
                     return null;
                   },
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _firstNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'First name',
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return "Please enter first name";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: _lastNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Last name',
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return "Please enter last name";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
                 child: TextFormField(
                   obscureText: true,
                   controller: _passwordController,
@@ -87,31 +125,51 @@ class _SignInPageState extends State<SignInPage> {
                   },
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  //forgot password screen
-                },
-                child: const Text('Forgot Password',),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  obscureText: true,
+                  controller: _confirmPasswordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Confirm password',
+                  ),
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return "Please confirm password";
+                    }
+                    if(value != _passwordController.text){
+                      return "Shoud be equal to password";
+                    }
+                    return null;
+                  },
+                ),
               ),
               Container(
                 height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Login'),
+                  child: const Text('Sign Up'),
                   onPressed: () async {
                     var valid = _formKey.currentState!.validate();
                     if (!valid) {
                       return;
                     }
                     try{
-                      var user = await _userService.signIn(_loginController.text, _passwordController.text);
+                      var user = UserModel(
+                        email: _loginController.text,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text
+                      );
+
+                      var newUser = await _userService.signUp(user, _passwordController.text);
 
                       Navigator.pushReplacement(context, 
-                        MaterialPageRoute(builder: (_) => MainApp(user: user)));
+                        MaterialPageRoute(builder: (_) => MainApp(user: newUser)));
                     }
                     on AuthException {
                       setState(() {
-                        _errorMessage = "WRONG EMAIL OR PASSWORD.";
+                        _errorMessage = "User with this login exist";
                         _showErrorLoginMessage = true;
                       });
                       return;
@@ -125,23 +183,7 @@ class _SignInPageState extends State<SignInPage> {
                     }
                   },
                 )
-              ),
-              Row(
-                children: <Widget>[
-                  const Text('Does not have account?'),
-                  TextButton(
-                    child: const Text(
-                      'Sign up',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Navigator.push(context, 
-                        MaterialPageRoute(builder: (_) => const SignUpPage()));
-                    },
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+              )
             ],
           )
         )
