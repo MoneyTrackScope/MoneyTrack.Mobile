@@ -1,1 +1,1 @@
-Mobile clien for tracking money
+Mobile client for tracking money
