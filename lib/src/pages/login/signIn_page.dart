@@ -4,6 +4,7 @@ import 'package:money_track/src/exceptions/auth_exception.dart';
 import 'package:money_track/src/main_app.dart';
 import 'package:money_track/src/pages/login/signUp_page.dart';
 import 'package:money_track/src/services/user_service.dart';
+import 'package:money_track/src/util/constants.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _SignInPageState extends State<SignInPage> {
   bool _showErrorLoginMessage = false;
   String _errorMessage = "";
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +38,12 @@ class _SignInPageState extends State<SignInPage> {
                   Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
-                      child: const Text(
+                      child: Text(
                         'MoneyTrack',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 30),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(fontSize: LargeTextSize),
                       )),
                   if (_showErrorLoginMessage)
                     Container(
@@ -95,13 +100,21 @@ class _SignInPageState extends State<SignInPage> {
                       height: 50,
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: ElevatedButton(
-                        child: const Text('Login'),
+                        child: _isLoading
+                            ? const Image(
+                                image: AssetImage(
+                                    'assets/animation/downloading.gif'))
+                            : const Text("Login"),
                         onPressed: () async {
                           var valid = _formKey.currentState!.validate();
                           if (!valid) {
                             return;
                           }
                           try {
+                            setState(() {
+                              _isLoading = true;
+                            });
+
                             var user = await _userService.signIn(
                                 _loginController.text,
                                 _passwordController.text);
@@ -114,12 +127,14 @@ class _SignInPageState extends State<SignInPage> {
                             setState(() {
                               _errorMessage = "WRONG EMAIL OR PASSWORD.";
                               _showErrorLoginMessage = true;
+                              _isLoading = false;
                             });
                             return;
                           } on Exception {
                             setState(() {
                               _errorMessage = "Server error.";
                               _showErrorLoginMessage = true;
+                              _isLoading = false;
                             });
                             return;
                           }
@@ -143,12 +158,6 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: const Image(
-                        image: AssetImage(
-                            'assets/animation/downloading copy.gif')),
-                  )
                 ],
               ))),
     );

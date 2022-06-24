@@ -9,6 +9,7 @@ import 'package:money_track/src/services/internal/app_http_client.dart';
 import 'package:money_track/src/services/internal/secure_storeage.dart';
 import 'package:money_track/src/services/transaction_service.dart';
 import 'package:money_track/src/services/user_service.dart';
+import 'package:money_track/src/util/theme.dart';
 
 Future main() async {
   setupDependencies();
@@ -31,9 +32,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'MoenyTrack',
-        theme: ThemeData(primarySwatch: Colors.teal),
-        home: const SignInPage());
+    return MaterialApp(theme: basicTheme(), home: const SignInPage());
   }
 }

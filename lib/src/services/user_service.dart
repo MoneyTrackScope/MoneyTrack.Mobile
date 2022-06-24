@@ -17,6 +17,7 @@ class UserService {
   final StorageService _storage = GetIt.I.get<StorageService>();
 
   Future<UserModel> signIn(String login, String password) async {
+    await Future.delayed(Duration(seconds: 10));
     final response = await _httpClient.post(
         "${ApiSettings.baseApiUrl}/$_controllerUrl/signIn",
         body: <String, String>{"login": login, "password": password});
