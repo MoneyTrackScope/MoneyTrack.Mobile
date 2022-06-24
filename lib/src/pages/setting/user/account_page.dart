@@ -4,7 +4,7 @@ import 'package:money_track/src/pages/login/signIn_page.dart';
 import 'package:money_track/src/services/user_service.dart';
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({ Key? key }) : super(key: key);
+  const AccountPage({Key? key}) : super(key: key);
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -12,7 +12,6 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final UserService _userService = GetIt.I.get<UserService>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +25,10 @@ class _AccountPageState extends State<AccountPage> {
               child: const Text("Sign out"),
               onPressed: () async {
                 await _userService.signOut();
-                
+
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                Navigator.pushReplacement(context, 
-                  MaterialPageRoute(builder: (_) => const SignInPage()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => const LoginScreen()));
               },
             ),
           )
