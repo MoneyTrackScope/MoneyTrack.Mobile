@@ -9,7 +9,7 @@ import 'package:money_track/src/settings/app_settings.dart';
 
 import 'internal/secure_storeage.dart';
 
-class UserService{
+class UserService {
   static const String _controllerUrl = "api/User";
 
   final AppHtppClient _httpClient = GetIt.I.get<AppHtppClient>();
@@ -17,20 +17,17 @@ class UserService{
   final StorageService _storage = GetIt.I.get<StorageService>();
 
   Future<UserModel> signIn(String login, String password) async {
-    final response = await _httpClient
-      .post(
+    final response = await _httpClient.post(
         "${ApiSettings.baseApiUrl}/$_controllerUrl/signIn",
-        body: <String, String>{
-          "login" : login,
-          "password" : password
-        }
-      );
+        body: <String, String>{"login": login, "password": password});
 
-    if(response != null){
+    if (response != null) {
       var responseBody = jsonDecode(response);
 
-      _storage.writeSecureData(StorageItem(AppSettings.tokenKey, responseBody["token"]));
-      _storage.writeSecureData(StorageItem(AppSettings.tokenExpiredAtKey, responseBody["expiredAt"]));
+      _storage.writeSecureData(
+          StorageItem(AppSettings.tokenKey, responseBody["token"]));
+      _storage.writeSecureData(StorageItem(
+          AppSettings.tokenExpiredAtKey, responseBody["expiredAt"]));
 
       return UserModel.fromJson(responseBody["user"]);
     }
@@ -39,20 +36,17 @@ class UserService{
   }
 
   Future<UserModel> signUp(UserModel model, String password) async {
-    final response = await _httpClient
-      .post(
+    final response = await _httpClient.post(
         "${ApiSettings.baseApiUrl}/$_controllerUrl/signUp",
-        body: <String, dynamic>{
-          "user" : model.toJson(),
-          "password" : password
-        }
-      );
+        body: <String, dynamic>{"user": model.toJson(), "password": password});
 
-    if(response != null){
+    if (response != null) {
       var responseBody = jsonDecode(response);
 
-      _storage.writeSecureData(StorageItem(AppSettings.tokenKey, responseBody["token"]));
-      _storage.writeSecureData(StorageItem(AppSettings.tokenExpiredAtKey, responseBody["expiredAt"]));
+      _storage.writeSecureData(
+          StorageItem(AppSettings.tokenKey, responseBody["token"]));
+      _storage.writeSecureData(StorageItem(
+          AppSettings.tokenExpiredAtKey, responseBody["expiredAt"]));
 
       return UserModel.fromJson(responseBody["user"]);
     }
