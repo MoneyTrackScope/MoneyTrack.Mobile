@@ -9,18 +9,37 @@ ThemeData basicTheme() => ThemeData(
         headline6: const TextStyle(
           fontFamily: FontNameTitle,
           fontSize: LargeTextSize,
-          color: Color.fromARGB(255, 27, 142, 242),
+          color: Color.fromARGB(255, 125, 183, 234),
+          shadows: <Shadow>[
+            Shadow(
+              offset: Offset(0.0, 0.0),
+              blurRadius: 5.0,
+              color: Color.fromARGB(138, 34, 162, 242),
+            ),
+            Shadow(
+              offset: Offset(0.0, 0.0),
+              blurRadius: 15.0,
+              color: Color.fromARGB(98, 34, 162, 242),
+            ),
+          ],
         ),
         headline4: TextStyle(
           fontFamily: FontNameDefault,
           fontSize: MediumTextSize,
           fontWeight: FontWeight.w800,
           color: kSecondaryColor,
+          shadows: const <Shadow>[
+            Shadow(
+              offset: Offset(0.0, 0.0),
+              blurRadius: 2.0,
+              color: Color.fromARGB(214, 34, 162, 242),
+            ),
+          ],
         ),
         bodyText1: const TextStyle(
           fontFamily: FontNameDefault,
           fontSize: BodyTextSize,
-          color: Colors.green,
+          color: Color.fromARGB(255, 26, 46, 64),
         ),
       ),
       iconTheme: const IconThemeData(

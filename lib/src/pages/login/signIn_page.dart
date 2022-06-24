@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money_track/src/util/constants.dart';
@@ -29,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'DMSans',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -64,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             obscureText: true,
             style: const TextStyle(
               color: Colors.white,
-              fontFamily: 'OpenSans',
+              fontFamily: 'DMSans',
             ),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -102,11 +104,12 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Row(
         children: <Widget>[
           Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
+            data: ThemeData(
+                unselectedWidgetColor: Color.fromARGB(255, 128, 196, 238)),
             child: Checkbox(
               value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
+              checkColor: Color.fromARGB(221, 6, 8, 13),
+              activeColor: Color.fromARGB(255, 92, 185, 242),
               onChanged: (value) {
                 setState(() {
                   _rememberMe = value!;
@@ -125,25 +128,48 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
-        padding: const EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: const Text(
-          'LOGIN',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
+      height: 60,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: const [
+              Color.fromARGB(159, 27, 142, 242),
+              Color.fromARGB(151, 92, 184, 242),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
           ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(25.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(255, 92, 185, 242).withOpacity(0.2),
+              spreadRadius: 4,
+              blurRadius: 10,
+              offset: Offset(0, 3),
+            )
+          ]),
+      child: Center(
+        child: GestureDetector(
+          onTap: () {},
+          child: Text('LOGIN',
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                fontSize: 15,
+                color: kBackgroundColor,
+                shadows: <Shadow>[
+                  Shadow(
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 1.0,
+                    color: Color.fromARGB(255, 7, 18, 24),
+                  ),
+                  Shadow(
+                    offset: Offset(0.0, 0.0),
+                    blurRadius: 5.0,
+                    color: Color.fromARGB(53, 4, 13, 19),
+                  ),
+                ],
+              )),
         ),
       ),
     );
@@ -151,72 +177,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignInWithText() {
     return Column(
-      children: <Widget>[
-        const Text(
+      children: const <Widget>[
+        Text(
           '- OR -',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w400,
           ),
         ),
-        const SizedBox(height: 20.0),
-        Text(
-          'Sign in with',
-          style: Theme.of(context).textTheme.headline6,
-        ),
+        SizedBox(height: 20.0),
       ],
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: () => {},
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
-      child: RichText(
-        text: const TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -237,10 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color.fromARGB(255, 26, 46, 64),
-                      Color.fromARGB(255, 26, 46, 64),
-                      Color.fromARGB(223, 6, 8, 13),
-                      Color.fromARGB(255, 6, 8, 13),
+                      Color.fromARGB(255, 36, 65, 91),
+                      Color.fromARGB(255, 37, 66, 92),
+                      Color.fromARGB(255, 27, 37, 62),
+                      Color.fromARGB(255, 27, 37, 62),
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -260,8 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text('Sign In',
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
-                              .copyWith(fontSize: 40)),
+                              .headline6!
+                              .copyWith(fontSize: 30)),
                       const SizedBox(height: 30.0),
                       _buildEmailTF(),
                       const SizedBox(
@@ -272,7 +242,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                       _buildSignInWithText(),
-                      _buildSignupBtn(),
                     ],
                   ),
                 ),
