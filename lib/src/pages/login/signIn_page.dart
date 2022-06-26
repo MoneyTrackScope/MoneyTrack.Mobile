@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money_track/src/components/common_body.dart';
+import 'package:money_track/src/components/primary_button.dart';
 import 'package:money_track/src/util/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,62 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn() {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          print('Hi there');
-        },
-        style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(25.0),
-              ),
-            )),
-        child: Container(
-          //width: 200,
-          height: 60,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: const [
-                  Color.fromARGB(159, 27, 142, 242),
-                  Color.fromARGB(151, 92, 184, 242),
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(25.0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 92, 185, 242).withOpacity(0.2),
-                  spreadRadius: 4,
-                  blurRadius: 10,
-                  offset: Offset(0, 3),
-                )
-              ]),
-          alignment: Alignment.center,
-          child: Text('LOGIN',
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                fontSize: 15,
-                color: kBackgroundColor,
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(0.0, 0.0),
-                    blurRadius: 1.0,
-                    color: Color.fromARGB(255, 7, 18, 24),
-                  ),
-                  Shadow(
-                    offset: Offset(0.0, 0.0),
-                    blurRadius: 5.0,
-                    color: Color.fromARGB(53, 4, 13, 19),
-                  ),
-                ],
-              )),
-        ),
-      ),
+    return PrimaryButton(
+      onPressed: () {},
+      text: "LOGIN",
+      height: 50,
     );
   }
 

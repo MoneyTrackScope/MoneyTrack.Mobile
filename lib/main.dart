@@ -10,6 +10,7 @@ import 'package:money_track/src/services/internal/secure_storeage.dart';
 import 'package:money_track/src/services/transaction_service.dart';
 import 'package:money_track/src/services/user_service.dart';
 import 'package:money_track/src/util/theme.dart';
+import 'package:money_track/src/util/themes/base_theme.dart';
 
 Future main() async {
   setupDependencies();
@@ -25,6 +26,8 @@ void setupDependencies() {
   GetIt.I.registerSingleton(AccountService());
   GetIt.I.registerSingleton(CategoryService());
   GetIt.I.registerSingleton(UserService());
+
+  GetIt.I.registerSingleton(ThemeBase());
 }
 
 class App extends StatelessWidget {
