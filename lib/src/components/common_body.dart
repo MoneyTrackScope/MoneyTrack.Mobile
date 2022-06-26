@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import 'package:money_track/src/util/themes/base_theme.dart';
 
 class CommonBody extends StatelessWidget {
   final Widget content;
 
-  const CommonBody({Key? key, required this.content}) : super(key: key);
+  final ThemeBase theme = GetIt.I.get<ThemeBase>();
+
+  CommonBody({Key? key, required this.content}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +22,12 @@ class CommonBody extends StatelessWidget {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 36, 65, 91),
-                      Color.fromARGB(255, 37, 66, 92),
-                      Color.fromARGB(255, 27, 37, 62),
-                      Color.fromARGB(255, 27, 37, 62),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
+                    colors: theme.backgroundColorList,
+                    stops: const [0.1, 0.4, 0.7, 0.9],
                   ),
                 ),
               ),

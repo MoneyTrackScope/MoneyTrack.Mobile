@@ -11,11 +11,19 @@ class ThemeBase {
   Color primaryColor = const Color.fromARGB(255, 26, 46, 64);
   Color secondaryColor = const Color.fromARGB(255, 125, 183, 234);
 
+  // Primary button styles
   Color primaryButtonTextColor = const Color.fromARGB(221, 6, 8, 13);
   late LinearGradient primaryButtonGradient;
   late List<BoxShadow> primaryButtonShadowList;
   late List<Shadow> primaryButtonTextShadowList;
   late TextStyle primaryButtonTextStyle;
+
+  List<Color> backgroundColorList = const [
+    Color.fromARGB(255, 36, 65, 91),
+    Color.fromARGB(255, 37, 66, 92),
+    Color.fromARGB(255, 27, 37, 62),
+    Color.fromARGB(255, 27, 37, 62),
+  ];
 
   ThemeBase() {
     primaryButtonGradient = const LinearGradient(
