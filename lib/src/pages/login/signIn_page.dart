@@ -128,34 +128,42 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn() {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      height: 60,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: const [
-              Color.fromARGB(159, 27, 142, 242),
-              Color.fromARGB(151, 92, 184, 242),
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(25.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(255, 92, 185, 242).withOpacity(0.2),
-              spreadRadius: 4,
-              blurRadius: 10,
-              offset: Offset(0, 3),
-            )
-          ]),
-      child: Center(
-        child: MaterialButton(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shape: const StadiumBorder(),
-          onPressed: () {},
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          print('Hi there');
+        },
+        style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(25.0),
+              ),
+            )),
+        child: Container(
+          //width: 200,
+          height: 60,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: const [
+                  Color.fromARGB(159, 27, 142, 242),
+                  Color.fromARGB(151, 92, 184, 242),
+                ],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(25.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 92, 185, 242).withOpacity(0.2),
+                  spreadRadius: 4,
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                )
+              ]),
+          alignment: Alignment.center,
           child: Text('LOGIN',
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
@@ -179,21 +187,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildSignInWithText() {
-    return Column(
-      children: const <Widget>[
-        Text(
-          '- OR -',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 20.0),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,8 +204,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         _buildPasswordTF(),
         _buildRemeberAndForgetRow(),
-        _buildLoginBtn(),
-        _buildSignInWithText(),
+        const SizedBox(
+          height: 30.0,
+        ),
+        _buildLoginBtn()
       ],
     )));
   }
