@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/common_body.dart';
 import 'package:money_track/src/components/primary_button.dart';
 import 'package:money_track/src/util/constants.dart';
+
+import '../../util/themes/base_theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final ThemeBase theme = GetIt.I.get<ThemeBase>();
+
   bool _rememberMe = false;
 
   Widget _buildEmailTF() {
@@ -22,28 +27,25 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         Text(
           'Email',
-          style: Theme.of(context).textTheme.headline4,
+          style: theme.labelTextStyle,
         ),
         const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: theme.textInputDecorationStyle,
           height: 60.0,
           child: TextField(
             keyboardType: TextInputType.emailAddress,
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'DMSans',
-            ),
+            style: theme.inputTextStyle,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: theme.inputColor,
               ),
               hintText: 'Enter your Email',
-              hintStyle: kHintTextStyle,
+              hintStyle: theme.hintTextStyle,
             ),
           ),
         ),
@@ -57,28 +59,25 @@ class _LoginScreenState extends State<LoginScreen> {
       children: <Widget>[
         Text(
           'Password',
-          style: Theme.of(context).textTheme.headline4,
+          style: theme.labelTextStyle,
         ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
-          decoration: kBoxDecorationStyle,
+          decoration: theme.textInputDecorationStyle,
           height: 60.0,
           child: TextField(
             obscureText: true,
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'DMSans',
-            ),
+            style: theme.inputTextStyle,
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: theme.inputColor,
               ),
               hintText: 'Enter your Password',
-              hintStyle: kHintTextStyle,
+              hintStyle: theme.hintTextStyle,
             ),
           ),
         ),
@@ -98,9 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.zero,
               activeColor: kSecondaryColor,
               checkColor: kPrimaryColor,
-              title: const Text(
+              title: Text(
                 "Remember me",
-                style: kLabelStyle,
+                style: theme.labelTextStyle,
               ),
               controlAffinity: ListTileControlAffinity.leading,
               value: _rememberMe,
@@ -119,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.only(right: 0.0),
                   child: Text(
                     'Forgot Password?',
-                    style: kLabelStyle,
+                    style: theme.labelTextStyle,
                   ),
                 )),
           )
@@ -143,9 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
             content: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('Sign In',
-            style:
-                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 30)),
+        Text('Sign In', style: theme.titleTextStyle),
         const SizedBox(height: 30.0),
         _buildEmailTF(),
         const SizedBox(

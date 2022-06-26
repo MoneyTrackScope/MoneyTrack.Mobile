@@ -4,6 +4,7 @@ class ThemeBase {
   String fontNameDefault = 'DMSans';
   String fontNameTitle = 'WorkSans';
 
+  double titleTextSize = 33;
   double largeTextSize = 26.0;
   double mediumTextSize = 15.0;
   double bodyTextSize = 11.0;
@@ -24,6 +25,27 @@ class ThemeBase {
     Color.fromARGB(255, 27, 37, 62),
     Color.fromARGB(255, 27, 37, 62),
   ];
+
+  late TextStyle titleTextStyle;
+
+  late TextStyle labelTextStyle;
+
+  final textInputDecorationStyle = BoxDecoration(
+    color: const Color.fromARGB(59, 92, 184, 242),
+    borderRadius: BorderRadius.circular(10.0),
+    boxShadow: const [
+      BoxShadow(
+        color: Color.fromARGB(86, 0, 0, 0),
+        blurRadius: 6.0,
+        offset: Offset(0, 2),
+      ),
+    ],
+  );
+
+  late TextStyle hintTextStyle;
+
+  final Color inputColor = Colors.white;
+  late TextStyle inputTextStyle;
 
   ThemeBase() {
     primaryButtonGradient = const LinearGradient(
@@ -62,5 +84,44 @@ class ThemeBase {
         color: primaryButtonTextColor,
         shadows: primaryButtonTextShadowList,
         fontSize: mediumTextSize);
+
+    titleTextStyle = TextStyle(
+      fontFamily: fontNameTitle,
+      fontSize: titleTextSize,
+      color: secondaryColor,
+      shadows: const [
+        Shadow(
+          offset: Offset(0.0, 0.0),
+          blurRadius: 5.0,
+          color: Color.fromARGB(138, 34, 162, 242),
+        ),
+        Shadow(
+          offset: Offset(0.0, 0.0),
+          blurRadius: 15.0,
+          color: Color.fromARGB(98, 34, 162, 242),
+        ),
+      ],
+    );
+
+    labelTextStyle = TextStyle(
+      fontFamily: fontNameDefault,
+      fontSize: mediumTextSize,
+      fontWeight: FontWeight.w800,
+      color: secondaryColor,
+      shadows: const <Shadow>[
+        Shadow(
+          offset: Offset(0.0, 0.0),
+          blurRadius: 2.0,
+          color: Color.fromARGB(214, 34, 162, 242),
+        ),
+      ],
+    );
+
+    hintTextStyle = TextStyle(
+      color: Colors.white54,
+      fontFamily: fontNameTitle,
+    );
+
+    inputTextStyle = TextStyle(color: inputColor, fontFamily: fontNameDefault);
   }
 }
