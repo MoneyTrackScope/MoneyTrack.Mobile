@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:money_track/src/components/common_body.dart';
 import 'package:money_track/src/util/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -84,43 +85,43 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: const EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
+  Widget _buildRemeberAndForgetRow() {
     return SizedBox(
-      height: 20.0,
+      height: 70.0,
       child: Row(
         children: <Widget>[
-          Theme(
-            data: ThemeData(
-                unselectedWidgetColor: Color.fromARGB(255, 128, 196, 238)),
-            child: Checkbox(
+          Expanded(
+              child: Container(
+            alignment: Alignment.centerLeft,
+            child: CheckboxListTile(
+              contentPadding: EdgeInsets.zero,
+              activeColor: kSecondaryColor,
+              checkColor: kPrimaryColor,
+              title: const Text(
+                "Remember me",
+                style: kLabelStyle,
+              ),
+              controlAffinity: ListTileControlAffinity.leading,
               value: _rememberMe,
-              checkColor: Color.fromARGB(221, 6, 8, 13),
-              activeColor: Color.fromARGB(255, 92, 185, 242),
               onChanged: (value) {
                 setState(() {
                   _rememberMe = value!;
                 });
               },
             ),
-          ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
+          )),
+          Container(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+                onPressed: () => print('Forgot Password Button Pressed'),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 0.0),
+                  child: Text(
+                    'Forgot Password?',
+                    style: kLabelStyle,
+                  ),
+                )),
+          )
         ],
       ),
     );
@@ -128,6 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
+      clipBehavior: Clip.hardEdge,
       height: 60,
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -150,8 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
             )
           ]),
       child: Center(
-        child: GestureDetector(
-          onTap: () {},
+        child: MaterialButton(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          shape: const StadiumBorder(),
+          onPressed: () {},
           child: Text('LOGIN',
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
@@ -193,63 +197,23 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(255, 36, 65, 91),
-                      Color.fromARGB(255, 37, 66, 92),
-                      Color.fromARGB(255, 27, 37, 62),
-                      Color.fromARGB(255, 27, 37, 62),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Sign In',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(fontSize: 30)),
-                      const SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
-                      _buildSignInWithText(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+        body: CommonBody(
+            content: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text('Sign In',
+            style:
+                Theme.of(context).textTheme.headline6!.copyWith(fontSize: 30)),
+        const SizedBox(height: 30.0),
+        _buildEmailTF(),
+        const SizedBox(
+          height: 30.0,
         ),
-      ),
-    );
+        _buildPasswordTF(),
+        _buildRemeberAndForgetRow(),
+        _buildLoginBtn(),
+        _buildSignInWithText(),
+      ],
+    )));
   }
 }

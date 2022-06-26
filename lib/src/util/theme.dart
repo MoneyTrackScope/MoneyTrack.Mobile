@@ -56,18 +56,18 @@ ThemeData basicTheme() => ThemeData(
         buttonColor: Colors.deepPurple,
         textTheme: ButtonTextTheme.accent,
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              primary: Color.fromARGB(255, 177, 23, 215), // background color
-              textStyle: const TextStyle(
-                  fontFamily: FontNameDefault,
-                  fontSize: BodyTextSize,
-                  color: Color.fromARGB(255, 176, 47, 33)))
-          // bottomAppBarColor: Colors.deepPurple,
-          // cardColor: Colors.orange.shade100,
-          // scaffoldBackgroundColor: Colors.yellow,
-          ),
+      // elevatedButtonTheme: ElevatedButtonThemeData(
+      //     style: ElevatedButton.styleFrom(
+      //         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      //         shape: RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.circular(20)),
+      //         primary: Color.fromARGB(255, 177, 23, 215), // background color
+      //         textStyle: const TextStyle(
+      //             fontFamily: FontNameDefault,
+      //             fontSize: BodyTextSize,
+      //             color: Color.fromARGB(255, 176, 47, 33)))
+      //     // bottomAppBarColor: Colors.deepPurple,
+      //     // cardColor: Colors.orange.shade100,
+      //     // scaffoldBackgroundColor: Colors.yellow,
+      //     ),
     );
