@@ -1,9 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-import '../util/constants.dart';
-import '../util/themes/base_theme.dart';
+import 'package:money_track/src/util/themes/base_theme.dart';
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;

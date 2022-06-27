@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:money_track/src/components/common_body.dart';
-import 'package:money_track/src/components/primary_button.dart';
+import 'package:money_track/src/components/widgets/common_body.dart';
+import 'package:money_track/src/components/widgets/primary_button.dart';
 import 'package:money_track/src/util/constants.dart';
 
 import '../../util/themes/base_theme.dart';
