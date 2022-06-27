@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/widgets/common_body.dart';
+import 'package:money_track/src/components/widgets/input_with_label.dart';
 import 'package:money_track/src/components/widgets/primary_button.dart';
 import 'package:money_track/src/util/constants.dart';
 
@@ -16,72 +15,28 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ThemeBase theme = GetIt.I.get<ThemeBase>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
 
-  Widget _buildEmailTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Email',
-          style: theme.labelTextStyle,
-        ),
-        const SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: theme.textInputDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            style: theme.inputTextStyle,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.email,
-                color: theme.inputColor,
-              ),
-              hintText: 'Enter your Email',
-              hintStyle: theme.hintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
+  Widget _buildEmailInput() {
+    return InputWithLabel(
+        controller: _emailController,
+        label: 'Email',
+        hint: 'Enter your Email',
+        inputType: TextInputType.emailAddress);
   }
 
   Widget _buildPasswordTF() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Password',
-          style: theme.labelTextStyle,
-        ),
-        SizedBox(height: 10.0),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: theme.textInputDecorationStyle,
-          height: 60.0,
-          child: TextField(
-            obscureText: true,
-            style: theme.inputTextStyle,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: theme.inputColor,
-              ),
-              hintText: 'Enter your Password',
-              hintStyle: theme.hintTextStyle,
-            ),
-          ),
-        ),
-      ],
-    );
+    return InputWithLabel(
+        controller: _passwordController,
+        label: 'Password',
+        hint: 'Enter your Password',
+        obscureText: true);
   }
 
   Widget _buildRemeberAndForgetRow() {
@@ -138,22 +93,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: CommonBody(
-            content: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text('Sign In', style: theme.titleTextStyle),
-        const SizedBox(height: 30.0),
-        _buildEmailTF(),
-        const SizedBox(
-          height: 30.0,
-        ),
-        _buildPasswordTF(),
-        _buildRemeberAndForgetRow(),
-        const SizedBox(
-          height: 30.0,
-        ),
-        _buildLoginBtn()
-      ],
+            content: Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: Text('Sign In', style: theme.titleTextStyle),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: _buildEmailInput(),
+          ),
+          _buildPasswordTF(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30),
+            child: _buildRemeberAndForgetRow(),
+          ),
+          _buildLoginBtn()
+        ],
+      ),
     )));
   }
 }
