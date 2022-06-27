@@ -42,11 +42,11 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 30, top: 100),
+                padding: const EdgeInsets.only(bottom: 30, top: 50),
                 child: Text('Sign Up', style: theme.titleTextStyle),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: InputWithLabel(
                     controller: _emailController,
                     label: 'Email',
@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     inputType: TextInputType.emailAddress),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: InputWithLabel(
                     controller: _firstNameController,
                     label: 'Fist Name',
@@ -62,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     inputType: TextInputType.name),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: InputWithLabel(
                     controller: _lastNameController,
                     label: 'Last Name',
@@ -70,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     inputType: TextInputType.name),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: InputWithLabel(
                     controller: _passwordController,
                     label: 'Password',
@@ -78,7 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: true),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 50),
                 child: InputWithLabel(
                     controller: _confirmPasswordController,
                     label: 'Confirm Password',

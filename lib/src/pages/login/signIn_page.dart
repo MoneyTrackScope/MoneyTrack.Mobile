@@ -7,14 +7,14 @@ import 'package:money_track/src/util/constants.dart';
 
 import '../../util/themes/base_theme.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignInPageState extends State<SignInPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ThemeBase theme = GetIt.I.get<ThemeBase>();
 

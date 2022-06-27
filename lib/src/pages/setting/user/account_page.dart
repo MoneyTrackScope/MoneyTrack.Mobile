@@ -28,7 +28,7 @@ class _AccountPageState extends State<AccountPage> {
 
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (_) => const LoginScreen()));
+                    MaterialPageRoute(builder: (_) => const SignInPage()));
               },
             ),
           )
