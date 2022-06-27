@@ -37,7 +37,7 @@ class CommonBody extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 40.0,
                   ),
                   child: content,
                 ),

@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 30, top: 100),
             child: Text('Sign In', style: theme.titleTextStyle),
           ),
           Padding(
