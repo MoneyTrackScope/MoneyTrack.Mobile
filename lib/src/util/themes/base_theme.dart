@@ -47,6 +47,9 @@ class ThemeBase {
   final Color inputColor = Colors.white;
   late TextStyle inputTextStyle;
 
+  late LinearGradient appOutlineButtonGradient;
+  late TextStyle appOutlineButtonContentStyle;
+
   ThemeBase() {
     primaryButtonGradient = const LinearGradient(
       colors: [
@@ -83,7 +86,8 @@ class ThemeBase {
         fontWeight: FontWeight.normal,
         color: primaryButtonTextColor,
         shadows: primaryButtonTextShadowList,
-        fontSize: mediumTextSize);
+        fontSize: mediumTextSize,
+        fontFamily: fontNameDefault);
 
     titleTextStyle = TextStyle(
       fontFamily: fontNameTitle,
@@ -123,5 +127,17 @@ class ThemeBase {
     );
 
     inputTextStyle = TextStyle(color: inputColor, fontFamily: fontNameDefault);
+
+    appOutlineButtonGradient = const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color.fromARGB(159, 27, 142, 242),
+          Color.fromARGB(151, 92, 184, 242),
+        ]);
+    appOutlineButtonContentStyle = TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: mediumTextSize,
+        color: Colors.white);
   }
 }

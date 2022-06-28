@@ -32,16 +32,14 @@ class CommonBody extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 40.0,
-                  ),
-                  child: content,
-                ),
-              )
+                  height: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0,
+                      vertical: 40.0,
+                    ),
+                    child: content,
+                  ))
             ],
           ),
         ),

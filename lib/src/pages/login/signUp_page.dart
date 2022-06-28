@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:money_track/src/components/widgets/app_outline_button.dart';
 import 'package:money_track/src/components/widgets/common_body.dart';
+import 'package:money_track/src/components/widgets/custom_stepper.dart';
 import 'package:money_track/src/components/widgets/input_with_label.dart';
 import 'package:money_track/src/components/widgets/primary_button.dart';
 import 'package:money_track/src/exceptions/auth_exception.dart';
@@ -30,8 +32,77 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  int _currentStep = 0;
+
   bool _showErrorLoginMessage = false;
   String _errorMessage = "";
+
+  Widget _buildEmailStep() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: InputWithLabel(
+            controller: _emailController,
+            label: 'Email',
+            hint: 'Enter your Email',
+            inputType: TextInputType.emailAddress,
+            icon: Icons.email,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoStep() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: InputWithLabel(
+              controller: _firstNameController,
+              label: 'Fist Name',
+              hint: 'Enter your First Name',
+              inputType: TextInputType.name,
+              icon: Icons.person),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: InputWithLabel(
+              controller: _lastNameController,
+              label: 'Last Name',
+              hint: 'Enter your Last Name',
+              inputType: TextInputType.name,
+              icon: Icons.person),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordStep() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: InputWithLabel(
+              controller: _passwordController,
+              label: 'Password',
+              hint: 'Enter your Password',
+              obscureText: true,
+              icon: Icons.lock),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 50),
+          child: InputWithLabel(
+              controller: _confirmPasswordController,
+              label: 'Confirm Password',
+              hint: 'Confirm your Password',
+              obscureText: true,
+              icon: Icons.lock),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,61 +111,58 @@ class _SignUpPageState extends State<SignUpPage> {
       content: Form(
           key: _formKey,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 30, top: 50),
+                padding: const EdgeInsets.only(bottom: 40, top: 130),
                 child: Text('Sign Up', style: theme.titleTextStyle),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: InputWithLabel(
-                  controller: _emailController,
-                  label: 'Email',
-                  hint: 'Enter your Email',
-                  inputType: TextInputType.emailAddress,
-                  icon: Icons.email,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: InputWithLabel(
-                    controller: _firstNameController,
-                    label: 'Fist Name',
-                    hint: 'Enter your First Name',
-                    inputType: TextInputType.name,
-                    icon: Icons.person),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: InputWithLabel(
-                    controller: _lastNameController,
-                    label: 'Last Name',
-                    hint: 'Enter your Last Name',
-                    inputType: TextInputType.name,
-                    icon: Icons.person),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: InputWithLabel(
-                    controller: _passwordController,
-                    label: 'Password',
-                    hint: 'Enter your Password',
-                    obscureText: true,
-                    icon: Icons.lock),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50),
-                child: InputWithLabel(
-                    controller: _confirmPasswordController,
-                    label: 'Confirm Password',
-                    hint: 'Confirm your Password',
-                    obscureText: true,
-                    icon: Icons.lock),
-              ),
-              PrimaryButton(
-                onPressed: () {},
-                text: "SIGN UP",
-                height: 50,
+              Expanded(
+                child: CustomStepper(
+                    type: StepperType.horizontal,
+                    margin: EdgeInsets.zero,
+                    controlsBuilder:
+                        (BuildContext context, ControlsDetails details) {
+                      return Row(
+                        children: [
+                          Expanded(
+                              child: PrimaryButton(
+                            onPressed: null,
+                            text: "Next",
+                            height: 40,
+                            width: 110,
+                          )),
+                          Expanded(
+                              child: AppOutlineButton(
+                            onPressed: null,
+                            height: 40,
+                            width: 110,
+                            text: "Back",
+                          )),
+                        ],
+                      );
+                    },
+                    // physics: NeverScrollableScrollPhysics(),
+                    steps: [
+                      Step(
+                        isActive: _currentStep >= 0,
+                        title: Text("Email"),
+                        content: Padding(
+                          child: _buildEmailStep(),
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                      ),
+                      Step(
+                        isActive: _currentStep >= 1,
+                        title: Text("Info"),
+                        content: _buildInfoStep(),
+                      ),
+                      Step(
+                        isActive: _currentStep >= 2,
+                        title: Text("Password"),
+                        content: _buildPasswordStep(),
+                      ),
+                    ]),
               )
             ],
           )),

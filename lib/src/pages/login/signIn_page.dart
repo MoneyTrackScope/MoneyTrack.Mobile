@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 30, top: 100),
+            padding: const EdgeInsets.only(bottom: 40),
             child: Text('Sign In', style: theme.titleTextStyle),
           ),
           Padding(
