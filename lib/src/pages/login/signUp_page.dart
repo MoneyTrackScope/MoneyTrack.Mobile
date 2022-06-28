@@ -48,10 +48,12 @@ class _SignUpPageState extends State<SignUpPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: InputWithLabel(
-                    controller: _emailController,
-                    label: 'Email',
-                    hint: 'Enter your Email',
-                    inputType: TextInputType.emailAddress),
+                  controller: _emailController,
+                  label: 'Email',
+                  hint: 'Enter your Email',
+                  inputType: TextInputType.emailAddress,
+                  icon: Icons.email,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -59,7 +61,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _firstNameController,
                     label: 'Fist Name',
                     hint: 'Enter your First Name',
-                    inputType: TextInputType.name),
+                    inputType: TextInputType.name,
+                    icon: Icons.person),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -67,7 +70,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _lastNameController,
                     label: 'Last Name',
                     hint: 'Enter your Last Name',
-                    inputType: TextInputType.name),
+                    inputType: TextInputType.name,
+                    icon: Icons.person),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -75,7 +79,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _passwordController,
                     label: 'Password',
                     hint: 'Enter your Password',
-                    obscureText: true),
+                    obscureText: true,
+                    icon: Icons.lock),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 50),
@@ -83,7 +88,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _confirmPasswordController,
                     label: 'Confirm Password',
                     hint: 'Confirm your Password',
-                    obscureText: true),
+                    obscureText: true,
+                    icon: Icons.lock),
               ),
               PrimaryButton(
                 onPressed: () {},

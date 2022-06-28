@@ -9,6 +9,7 @@ class InputWithLabel extends StatelessWidget {
   final String? hint;
   final bool obscureText;
   final TextInputType? inputType;
+  final IconData icon;
 
   final TextEditingController controller;
 
@@ -18,6 +19,7 @@ class InputWithLabel extends StatelessWidget {
       this.hint,
       this.inputType,
       required this.controller,
+      this.icon = Icons.email,
       this.obscureText = false})
       : super(key: key);
 
@@ -47,7 +49,7 @@ class InputWithLabel extends StatelessWidget {
               border: InputBorder.none,
               contentPadding: const EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                icon,
                 color: theme.inputColor,
               ),
               hintText: hint,

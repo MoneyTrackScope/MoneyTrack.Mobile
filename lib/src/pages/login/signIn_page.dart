@@ -25,10 +25,12 @@ class _SignInPageState extends State<SignInPage> {
 
   Widget _buildEmailInput() {
     return InputWithLabel(
-        controller: _emailController,
-        label: 'Email',
-        hint: 'Enter your Email',
-        inputType: TextInputType.emailAddress);
+      controller: _emailController,
+      label: 'Email',
+      hint: 'Enter your Email',
+      inputType: TextInputType.emailAddress,
+      icon: Icons.email,
+    );
   }
 
   Widget _buildPasswordTF() {
@@ -36,7 +38,8 @@ class _SignInPageState extends State<SignInPage> {
         controller: _passwordController,
         label: 'Password',
         hint: 'Enter your Password',
-        obscureText: true);
+        obscureText: true,
+        icon: Icons.lock);
   }
 
   Widget _buildRemeberAndForgetRow() {
