@@ -121,20 +121,31 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: CustomStepper(
                     type: StepperType.horizontal,
                     margin: EdgeInsets.zero,
+                    physics: const ScrollPhysics(),
+                    onStepTapped: (int step) =>
+                        {setState(() => _currentStep = step)},
                     controlsBuilder:
                         (BuildContext context, ControlsDetails details) {
                       return Row(
                         children: [
                           Expanded(
                               child: PrimaryButton(
-                            onPressed: null,
+                            onPressed: () => {
+                              _currentStep < 2
+                                  ? setState(() => _currentStep += 1)
+                                  : null
+                            },
                             text: "Next",
                             height: 40,
                             width: 110,
                           )),
                           Expanded(
                               child: AppOutlineButton(
-                            onPressed: null,
+                            onPressed: () => {
+                              _currentStep > 0
+                                  ? setState(() => _currentStep -= 1)
+                                  : null
+                            },
                             height: 40,
                             width: 110,
                             text: "Back",
@@ -142,25 +153,39 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       );
                     },
-                    // physics: NeverScrollableScrollPhysics(),
                     steps: [
                       Step(
                         isActive: _currentStep >= 0,
-                        title: Text("Email"),
+                        state: _currentStep >= 0
+                            ? StepState.complete
+                            : StepState.disabled,
+                        title: const Text("Email"),
                         content: Padding(
                           child: _buildEmailStep(),
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: const EdgeInsets.only(bottom: 20),
                         ),
                       ),
                       Step(
                         isActive: _currentStep >= 1,
-                        title: Text("Info"),
-                        content: _buildInfoStep(),
+                        state: _currentStep >= 1
+                            ? StepState.complete
+                            : StepState.disabled,
+                        title: const Text("Info"),
+                        content: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: _buildInfoStep(),
+                        ),
                       ),
                       Step(
                         isActive: _currentStep >= 2,
-                        title: Text("Password"),
-                        content: _buildPasswordStep(),
+                        state: _currentStep >= 2
+                            ? StepState.complete
+                            : StepState.disabled,
+                        title: const Text("Password"),
+                        content: Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: _buildPasswordStep(),
+                        ),
                       ),
                     ]),
               )
