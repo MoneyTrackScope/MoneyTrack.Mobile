@@ -92,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
               icon: Icons.lock),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 50),
+          padding: const EdgeInsets.only(bottom: 15),
           child: InputWithLabel(
               controller: _confirmPasswordController,
               label: 'Confirm Password',
@@ -114,12 +114,13 @@ class _SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 40, top: 130),
+                padding: const EdgeInsets.only(bottom: 40, top: 100),
                 child: Text('Sign Up', style: theme.titleTextStyle),
               ),
               Expanded(
                 child: CustomStepper(
                     type: StepperType.horizontal,
+                    currentStep: _currentStep,
                     margin: EdgeInsets.zero,
                     physics: const ScrollPhysics(),
                     onStepTapped: (int step) =>
