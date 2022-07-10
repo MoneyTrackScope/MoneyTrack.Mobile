@@ -9,6 +9,7 @@ import 'package:money_track/src/exceptions/auth_exception.dart';
 import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/services/user_service.dart';
 import 'package:money_track/src/util/themes/base_theme.dart';
+import 'package:money_track/src/util/themes/color_extention.dart';
 
 import '../../main_app.dart';
 
@@ -119,7 +120,16 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Expanded(
                   child: Theme(
-                data: ThemeData(canvasColor: Colors.transparent),
+                data: ThemeData(
+                    canvasColor: Colors.transparent,
+                    textTheme: TextTheme(
+                        bodyText1: TextStyle(color: theme.secondaryColor)),
+                    //primarySwatch: theme.secondaryColor.toMaterial(),
+                    colorScheme: ColorScheme.light(
+                        primary: theme.secondaryColor,
+                        onSurface: theme.primaryColor,
+                        secondary: theme.inputColor,
+                        inversePrimary: theme.nonAccentColor)),
                 child: CustomStepper(
                     elevation: 0,
                     currentStep: _currentStep,

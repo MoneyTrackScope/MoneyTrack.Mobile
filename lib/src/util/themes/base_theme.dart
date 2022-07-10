@@ -12,6 +12,8 @@ class ThemeBase {
   Color primaryColor = const Color.fromARGB(255, 26, 46, 64);
   Color secondaryColor = const Color.fromARGB(255, 125, 183, 234);
 
+  Color nonAccentColor = Colors.white54;
+
   // Primary button styles
   Color primaryButtonTextColor = const Color.fromARGB(221, 6, 8, 13);
   late LinearGradient primaryButtonGradient;
@@ -122,7 +124,7 @@ class ThemeBase {
     );
 
     hintTextStyle = TextStyle(
-      color: Colors.white54,
+      color: nonAccentColor,
       fontFamily: fontNameTitle,
     );
 

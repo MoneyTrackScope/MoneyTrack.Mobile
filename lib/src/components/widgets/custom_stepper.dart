@@ -230,6 +230,7 @@ class _CustomStepperState extends State<CustomStepper>
   }
 
   Widget _buildCircleChild(int index, bool oldState) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final StepState state =
         oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
@@ -241,7 +242,7 @@ class _CustomStepperState extends State<CustomStepper>
           '${index + 1}',
           style: isDarkActive
               ? _kStepStyle.copyWith(color: Colors.black87)
-              : _kStepStyle,
+              : _kStepStyle.copyWith(color: colorScheme.secondary),
         );
       case StepState.editing:
         return Icon(
@@ -252,7 +253,7 @@ class _CustomStepperState extends State<CustomStepper>
       case StepState.complete:
         return Icon(
           Icons.check,
-          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
+          color: isDarkActive ? _kCircleActiveDark : colorScheme.onSurface,
           size: 18.0,
         );
       case StepState.error:
@@ -424,6 +425,7 @@ class _CustomStepperState extends State<CustomStepper>
   TextStyle _titleStyle(int index) {
     final ThemeData themeData = Theme.of(context);
     final TextTheme textTheme = themeData.textTheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
@@ -433,7 +435,7 @@ class _CustomStepperState extends State<CustomStepper>
         return textTheme.bodyText1!;
       case StepState.disabled:
         return textTheme.bodyText1!.copyWith(
-          color: _isDark() ? _kDisabledDark : _kDisabledLight,
+          color: _isDark() ? _kDisabledDark : colorScheme.inversePrimary,
         );
       case StepState.error:
         return textTheme.bodyText1!.copyWith(
