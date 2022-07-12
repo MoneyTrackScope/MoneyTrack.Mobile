@@ -52,6 +52,15 @@ class ThemeBase {
   late LinearGradient appOutlineButtonGradient;
   late TextStyle appOutlineButtonContentStyle;
 
+  LinearGradient introductionBackgroundGradient = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color.fromARGB(0, 36, 65, 91),
+        Color.fromARGB(162, 27, 37, 62),
+        Color.fromARGB(255, 27, 37, 62),
+      ]);
+
   ThemeBase() {
     primaryButtonGradient = const LinearGradient(
       colors: [

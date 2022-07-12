@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:money_track/src/pages/introduction/introduction_page.dart';
 import 'package:money_track/src/pages/login/signIn_page.dart';
 import 'package:money_track/src/pages/login/signUp_page.dart';
 import 'package:money_track/src/services/account_service.dart';
@@ -14,6 +15,8 @@ import 'package:money_track/src/util/theme.dart';
 import 'package:money_track/src/util/themes/base_theme.dart';
 
 Future main() async {
+  Paint.enableDithering = true;
+
   setupDependencies();
 
   runApp(const App());
@@ -36,6 +39,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: basicTheme(), home: const SignUpPage());
+    return MaterialApp(theme: basicTheme(), home: IntroductionPage());
   }
 }
