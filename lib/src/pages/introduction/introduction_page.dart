@@ -12,7 +12,7 @@ class IntroductionPage extends StatelessWidget {
     return PrimaryButton(
       onPressed: () {},
       text: "LOGIN",
-      height: 50,
+      height: 40,
     );
   }
 
@@ -20,7 +20,7 @@ class IntroductionPage extends StatelessWidget {
     return AppOutlineButton(
       onPressed: () {},
       text: "SIGN UP",
-      height: 50,
+      height: 40,
     );
   }
 
@@ -42,6 +42,32 @@ class IntroductionPage extends StatelessWidget {
           decoration:
               BoxDecoration(gradient: theme.introductionBackgroundGradient),
         ),
+        Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Image.asset(
+                  'assets/image/light_logo.png',
+                  height: 500,
+                  width: 250,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+                child: _buildLoginBtn(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+                child: _buildSignUpBtn(),
+              ),
+            ],
+          ),
+        )
       ]),
     );
   }
