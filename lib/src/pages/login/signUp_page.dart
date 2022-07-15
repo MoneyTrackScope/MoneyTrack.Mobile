@@ -4,6 +4,7 @@ import 'package:money_track/src/components/widgets/app_outline_button.dart';
 import 'package:money_track/src/components/widgets/common_body.dart';
 import 'package:money_track/src/components/widgets/custom_stepper.dart';
 import 'package:money_track/src/components/widgets/input_with_label.dart';
+import 'package:money_track/src/components/widgets/introduction_body.dart';
 import 'package:money_track/src/components/widgets/primary_button.dart';
 import 'package:money_track/src/exceptions/auth_exception.dart';
 import 'package:money_track/src/models/user_model.dart';
@@ -108,8 +109,8 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CommonBody(
-      content: Form(
+        body: IntroductionBody(
+      body: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

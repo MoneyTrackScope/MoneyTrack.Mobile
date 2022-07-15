@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:money_track/src/components/widgets/introduction_body.dart';
 import '../../components/widgets/app_outline_button.dart';
 import '../../components/widgets/primary_button.dart';
 import '../../util/themes/base_theme.dart';
@@ -26,49 +27,30 @@ class IntroductionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: <Widget>[
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(
-                'assets/animation/background_introduction.gif',
-              ),
+    return IntroductionBody(
+        body: Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(5),
+            child: Image.asset(
+              'assets/image/light_logo.png',
+              height: 500,
+              width: 250,
             ),
           ),
-        ),
-        Container(
-          decoration:
-              BoxDecoration(gradient: theme.introductionBackgroundGradient),
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Image.asset(
-                  'assets/image/light_logo.png',
-                  height: 500,
-                  width: 250,
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-                child: _buildLoginBtn(),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-                child: _buildSignUpBtn(),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: _buildLoginBtn(),
           ),
-        )
-      ]),
-    );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: _buildSignUpBtn(),
+          ),
+        ],
+      ),
+    ));
   }
 }

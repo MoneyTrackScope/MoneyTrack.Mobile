@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:money_track/src/components/widgets/common_body.dart';
 import 'package:money_track/src/components/widgets/input_with_label.dart';
+import 'package:money_track/src/components/widgets/introduction_body.dart';
 import 'package:money_track/src/components/widgets/primary_button.dart';
 import 'package:money_track/src/util/constants.dart';
 
@@ -95,8 +96,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CommonBody(
-            content: Form(
+        body: IntroductionBody(
+            body: Form(
       key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
