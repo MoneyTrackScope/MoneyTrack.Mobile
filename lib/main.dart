@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:money_track/src/pages/introduction/introduction_page.dart';
-import 'package:money_track/src/pages/login/signIn_page.dart';
+import 'package:money_track/src/models/user_model.dart';
+import 'package:money_track/src/pages/home/home_page.dart';
 import 'package:money_track/src/pages/login/signUp_page.dart';
 import 'package:money_track/src/services/account_service.dart';
 import 'package:money_track/src/services/category_service.dart';
@@ -39,6 +39,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: basicTheme(), home: IntroductionPage());
+    return MaterialApp(theme: basicTheme(), home: HomePage());
   }
 }

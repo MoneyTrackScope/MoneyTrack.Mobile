@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:money_track/src/components/widgets/navigation_drawer.dart';
+import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/pages/setting/user/account_page.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import 'manage/manage_page.dart';
 
 class SettingPage extends StatefulWidget {
-  const SettingPage({ Key? key }) : super(key: key);
+  const SettingPage({Key? key}) : super(key: key);
 
   @override
   _SettingPageState createState() => _SettingPageState();
@@ -15,6 +17,10 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavigationDrawer(
+        user: UserModel(),
+      ),
+      appBar: AppBar(),
       body: SettingsList(
         sections: [
           SettingsSection(
@@ -24,9 +30,8 @@ class _SettingPageState extends State<SettingPage> {
                 title: const Text("Manage categories & accounts"),
                 leading: const Icon(Icons.category),
                 onPressed: (BuildContext context) {
-                  Navigator.push(context, 
-                    MaterialPageRoute(builder: (_) => const ManagePage())
-                  );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ManagePage()));
                 },
               ),
               SettingsTile(
@@ -45,9 +50,8 @@ class _SettingPageState extends State<SettingPage> {
                 title: const Text("Account"),
                 leading: const Icon(Icons.person),
                 onPressed: (BuildContext context) {
-                  Navigator.push(context, 
-                    MaterialPageRoute(builder: (_) => const AccountPage())
-                  );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const AccountPage()));
                 },
               )
             ],

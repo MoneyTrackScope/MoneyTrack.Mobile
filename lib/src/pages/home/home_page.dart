@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:money_track/main.dart';
+import 'package:money_track/src/components/widgets/navigation_drawer.dart';
+import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/pages/home/add_transaction_page.dart';
 import 'package:money_track/src/pages/home/transaction_list_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.restorationId}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
-  final String restorationId;
+  final String restorationId = "";
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,7 +20,9 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
   final _pages = <Widget>[
     const AddTransactionPage(),
     const TransactionListPage(),
-    const Center(child: Text("Analytics"),)
+    const Center(
+      child: Text("Analytics"),
+    )
   ];
 
   @override
@@ -52,6 +57,8 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
     ];
 
     return Scaffold(
+      appBar: AppBar(),
+      drawer: NavigationDrawer(user: UserModel()),
       body: _pages[_currentIndex.value],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: true,

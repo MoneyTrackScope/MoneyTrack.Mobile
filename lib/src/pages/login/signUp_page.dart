@@ -12,8 +12,6 @@ import 'package:money_track/src/services/user_service.dart';
 import 'package:money_track/src/util/themes/base_theme.dart';
 import 'package:money_track/src/util/themes/color_extention.dart';
 
-import '../../main_app.dart';
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
