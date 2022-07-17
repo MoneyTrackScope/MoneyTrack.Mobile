@@ -8,7 +8,7 @@ import 'package:money_track/src/pages/home/transaction_list_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  final String restorationId = "";
+  final String restorationId = "bottom_navigation_tab_index";
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,9 +20,6 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
   final _pages = <Widget>[
     const AddTransactionPage(),
     const TransactionListPage(),
-    const Center(
-      child: Text("Analytics"),
-    )
   ];
 
   @override
@@ -30,7 +27,7 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    registerForRestoration(_currentIndex, 'bottom_navigation_tab_index');
+    registerForRestoration(_currentIndex, restorationId);
   }
 
   @override
@@ -43,17 +40,13 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
   Widget build(BuildContext context) {
     const bottomNavigationBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.note_add),
-        label: "Add Transaction",
+        icon: Icon(Icons.home),
+        label: "Info",
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.list_alt),
         label: "Transactions List",
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.analytics),
-        label: "Analytics",
-      )
     ];
 
     return Scaffold(
@@ -73,21 +66,5 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
         },
       ),
     );
-  }
-}
-
-class _NavigationDestinationView extends StatelessWidget {
-  const _NavigationDestinationView({Key? key, required this.item})
-      : super(key: key);
-
-  final BottomNavigationBarItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(children: [
-      Center(
-        child: Text(item.label.toString()),
-      )
-    ]);
   }
 }
