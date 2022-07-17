@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:money_track/main.dart';
 import 'package:money_track/src/components/widgets/navigation_drawer.dart';
 import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/pages/home/add_transaction_page.dart';
+import 'package:money_track/src/pages/home/info_page.dart';
 import 'package:money_track/src/pages/home/transaction_list_page.dart';
+import 'package:money_track/src/util/themes/base_theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,12 +18,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with RestorationMixin {
+  final ThemeBase theme = GetIt.I.get<ThemeBase>();
+
   final RestorableInt _currentIndex = RestorableInt(0);
 
   final _pages = <Widget>[
-    const AddTransactionPage(),
+    const InfoPage(),
     const TransactionListPage(),
   ];
+  final _titles = ["Info", "Transactions"];
 
   @override
   String get restorationId => widget.restorationId;
@@ -36,35 +42,64 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
     super.dispose();
   }
 
+  Widget _buildNavigationBar() {
+    return Container(
+      decoration: BoxDecoration(color: theme.lastBackgroundGradientColor),
+      child: BottomAppBar(
+          color: theme.primaryColor,
+          elevation: 0,
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 12,
+          child: Container(
+            decoration: const BoxDecoration(color: Colors.transparent),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    setState(() {
+                      _currentIndex.value = 0;
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.list_alt),
+                  onPressed: () {
+                    setState(() {
+                      _currentIndex.value = 1;
+                    });
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    const bottomNavigationBarItems = <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: "Info",
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.list_alt),
-        label: "Transactions List",
-      ),
-    ];
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          _titles[_currentIndex.value],
+          style: theme.appBarTitleStyle,
+        ),
+        backgroundColor: theme.primaryColor,
+      ),
       drawer: NavigationDrawer(user: UserModel()),
       body: _pages[_currentIndex.value],
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        items: bottomNavigationBarItems,
-        currentIndex: _currentIndex.value,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _currentIndex.value = index;
-          });
+      bottomNavigationBar: _buildNavigationBar(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: theme.secondaryColor,
+        onPressed: () {
+          //code to execute on button press
         },
+        child: const Icon(Icons.add), //icon inside button
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

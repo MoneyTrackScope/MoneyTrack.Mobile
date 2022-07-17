@@ -9,8 +9,11 @@ class ThemeBase {
   double mediumTextSize = 15.0;
   double bodyTextSize = 11.0;
 
-  Color primaryColor = const Color.fromARGB(255, 26, 46, 64);
+  Color primaryColor = const Color.fromARGB(255, 17, 30, 42);
   Color secondaryColor = const Color.fromARGB(255, 125, 183, 234);
+
+  Color lastBackgroundGradientColor = const Color.fromARGB(255, 27, 37, 62);
+  //Color appBarTitleColor = Colors.white70;
 
   Color nonAccentColor = Colors.white54;
 
@@ -21,12 +24,7 @@ class ThemeBase {
   late List<Shadow> primaryButtonTextShadowList;
   late TextStyle primaryButtonTextStyle;
 
-  List<Color> backgroundColorList = const [
-    Color.fromARGB(255, 36, 65, 91),
-    Color.fromARGB(255, 37, 66, 92),
-    Color.fromARGB(255, 27, 37, 62),
-    Color.fromARGB(255, 27, 37, 62),
-  ];
+  late List<Color> backgroundColorList;
 
   late TextStyle titleTextStyle;
 
@@ -61,7 +59,16 @@ class ThemeBase {
         Color.fromARGB(255, 27, 37, 62),
       ]);
 
+  late TextStyle appBarTitleStyle;
+
   ThemeBase() {
+    backgroundColorList = [
+      const Color.fromARGB(255, 36, 65, 91),
+      const Color.fromARGB(255, 37, 66, 92),
+      const Color.fromARGB(255, 27, 37, 62),
+      lastBackgroundGradientColor
+    ];
+
     primaryButtonGradient = const LinearGradient(
       colors: [
         Color.fromARGB(159, 27, 142, 242),
@@ -146,9 +153,15 @@ class ThemeBase {
           Color.fromARGB(159, 27, 142, 242),
           Color.fromARGB(151, 92, 184, 242),
         ]);
+
     appOutlineButtonContentStyle = TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: mediumTextSize,
         color: Colors.white);
+
+    appBarTitleStyle = TextStyle(
+        fontFamily: fontNameTitle,
+        fontSize: largeTextSize,
+        color: secondaryColor);
   }
 }

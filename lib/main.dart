@@ -42,6 +42,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: basicTheme(), home: SignUpPage());
+    return MaterialApp(theme: basicTheme(), home: HomePage());
   }
 }
