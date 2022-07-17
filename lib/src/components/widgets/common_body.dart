@@ -27,7 +27,7 @@ class CommonBody extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: theme.backgroundColorList,
-                    stops: const [0.1, 0.4, 0.7, 0.9],
+                    stops: const [0.1, 0.8, 1],
                   ),
                 ),
               ),

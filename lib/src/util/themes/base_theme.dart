@@ -64,7 +64,6 @@ class ThemeBase {
   ThemeBase() {
     backgroundColorList = [
       const Color.fromARGB(255, 36, 65, 91),
-      const Color.fromARGB(255, 37, 66, 92),
       const Color.fromARGB(255, 27, 37, 62),
       lastBackgroundGradientColor
     ];

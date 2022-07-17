@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
     const InfoPage(),
     const TransactionListPage(),
   ];
-  final _titles = ["Info", "Transactions"];
+  final _titles = ["Home", "Transactions"];
 
   @override
   String get restorationId => widget.restorationId;
