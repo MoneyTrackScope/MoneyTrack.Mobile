@@ -51,30 +51,40 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
           shape: const CircularNotchedRectangle(),
           notchMargin: 12,
           child: Container(
-            decoration: const BoxDecoration(color: Colors.transparent),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    setState(() {
-                      _currentIndex.value = 0;
-                    });
-                  },
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Padding(
+                padding: EdgeInsets.all(3),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.home,
+                        size: 32,
+                        color: theme.inputColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _currentIndex.value = 0;
+                        });
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.list_alt,
+                        size: 32,
+                        color: theme.inputColor,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _currentIndex.value = 1;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.list_alt),
-                  onPressed: () {
-                    setState(() {
-                      _currentIndex.value = 1;
-                    });
-                  },
-                ),
-              ],
-            ),
-          )),
+              ))),
     );
   }
 
