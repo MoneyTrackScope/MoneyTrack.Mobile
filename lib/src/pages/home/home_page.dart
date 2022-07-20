@@ -99,7 +99,11 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
         ),
         backgroundColor: theme.primaryColor,
       ),
-      drawer: NavigationDrawer(user: UserModel()),
+      drawer: NavigationDrawer(
+          user: UserModel(
+              firstName: "firstname",
+              lastName: "lastname",
+              email: "emailtest")),
       body: _pages[_currentIndex.value],
       bottomNavigationBar: _buildNavigationBar(),
       floatingActionButton: FloatingActionButton(

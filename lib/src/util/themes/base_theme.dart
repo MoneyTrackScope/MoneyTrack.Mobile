@@ -6,6 +6,7 @@ class ThemeBase {
 
   double titleTextSize = 33;
   double largeTextSize = 26.0;
+  double mediumLargeTextStyle = 20.0;
   double mediumTextSize = 15.0;
   double bodyTextSize = 11.0;
 
@@ -60,6 +61,8 @@ class ThemeBase {
       ]);
 
   late TextStyle appBarTitleStyle;
+
+  late TextStyle drawerTextStyle;
 
   ThemeBase() {
     backgroundColorList = [
@@ -162,5 +165,7 @@ class ThemeBase {
         fontFamily: fontNameTitle,
         fontSize: largeTextSize,
         color: secondaryColor);
+
+    drawerTextStyle = TextStyle(color: inputColor, fontFamily: fontNameDefault);
   }
 }

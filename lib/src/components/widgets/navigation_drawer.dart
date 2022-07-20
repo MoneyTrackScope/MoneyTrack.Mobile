@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:money_track/src/components/widgets/common_body.dart';
 import 'package:money_track/src/models/user_model.dart';
 import 'package:money_track/src/pages/home/home_page.dart';
 import 'package:money_track/src/pages/setting/setting_page.dart';
+import 'package:money_track/src/util/themes/base_theme.dart';
 
 class NavigationDrawer extends StatefulWidget {
+  final ThemeBase theme = GetIt.I.get<ThemeBase>();
+
   final UserModel user;
 
-  const NavigationDrawer({Key? key, required this.user}) : super(key: key);
+  NavigationDrawer({Key? key, required this.user}) : super(key: key);
 
   @override
   _NavigationDrawerState createState() => _NavigationDrawerState();
@@ -14,18 +19,20 @@ class NavigationDrawer extends StatefulWidget {
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
   Widget _buildHeader() => Material(
-        color: Colors.red,
+        color: Colors.transparent,
         child: InkWell(
           onTap: () {},
           child: Container(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
             child: UserAccountsDrawerHeader(
-              accountName:
-                  Text("${widget.user.firstName} ${widget.user.lastName}"),
-              accountEmail: Text(widget.user.email),
-              currentAccountPicture: const CircleAvatar(
-                child: FlutterLogo(size: 42.0),
+              decoration: const BoxDecoration(color: Colors.transparent),
+              accountName: Text(
+                "${widget.user.firstName} ${widget.user.lastName}",
+                style: widget.theme.drawerTextStyle
+                    .copyWith(fontSize: widget.theme.largeTextSize),
               ),
+              accountEmail: Text(widget.user.email,
+                  style: widget.theme.drawerTextStyle
+                      .copyWith(fontSize: widget.theme.mediumLargeTextStyle)),
             ),
           ),
         ),
@@ -37,14 +44,18 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           runSpacing: 10,
           children: [
             ListTile(
-                title: const Text("Home"),
+                title: Text("Home",
+                    style: widget.theme.drawerTextStyle
+                        .copyWith(fontSize: widget.theme.mediumLargeTextStyle)),
                 leading: const Icon(Icons.home),
                 onTap: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (_) => const HomePage()));
                 }),
             ListTile(
-              title: const Text("Settings"),
+              title: Text("Settings",
+                  style: widget.theme.drawerTextStyle
+                      .copyWith(fontSize: widget.theme.mediumLargeTextStyle)),
               leading: const Icon(Icons.settings),
               onTap: () {
                 Navigator.pushReplacement(context,
@@ -58,10 +69,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: SingleChildScrollView(
+        child: CommonBody(
+      padding: const EdgeInsets.all(5),
+      content: SingleChildScrollView(
           child: Column(
         children: [_buildHeader(), _buildMenuItems()],
       )),
-    );
+    ));
   }
 }

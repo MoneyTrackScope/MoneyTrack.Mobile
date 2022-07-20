@@ -5,13 +5,20 @@ import 'package:money_track/src/util/themes/base_theme.dart';
 
 class CommonBody extends StatelessWidget {
   final Widget content;
+  final EdgeInsetsGeometry? padding;
 
   final ThemeBase theme = GetIt.I.get<ThemeBase>();
 
-  CommonBody({Key? key, required this.content}) : super(key: key);
+  CommonBody({Key? key, required this.content, this.padding}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var currentPadding = padding ??
+        const EdgeInsets.symmetric(
+          horizontal: 40.0,
+          vertical: 40.0,
+        );
+
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -34,10 +41,7 @@ class CommonBody extends StatelessWidget {
               SizedBox(
                   height: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0,
-                      vertical: 40.0,
-                    ),
+                    padding: currentPadding,
                     child: content,
                   ))
             ],
